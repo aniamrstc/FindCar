@@ -15,8 +15,22 @@ function getConnexion()
     }
     return $myDb;
 }
-function getPriceAsc(){
+function SelectAllVehiculeAvailable($dateDepart,$dateRetour){
     
+        $myDb=getConnexion();
+        $sql=$myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation from Vehicules where IdVehicule NOT IN (SELECT IdVehicule FROM Reservation WHERE DateDebut=? AND DateFin=?)");
+        $sql->execute([$dateDepart,$dateRetour]);
+        return $sql->fetchAll(PDO::FETCH_ASSOC);  
 }
+
+function SelectVehiculeWhereLocation($location){
+
+    $myDb=GetConnexion();
+    $sql=$myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation WHERE IdLocalisation=? ");
+    $sql->execute([$location]);
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
 
 ?>
