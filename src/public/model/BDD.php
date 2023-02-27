@@ -15,22 +15,27 @@ function getConnexion()
     }
     return $myDb;
 }
-function SelectAllVehiculeAvailable($dateDepart,$dateRetour){
+function GetAllVehiculeAvailable($dateDepart,$dateRetour){
     
         $myDb=getConnexion();
-        $sql=$myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation from Vehicules where IdVehicule NOT IN (SELECT IdVehicule FROM Reservation WHERE DateDebut=? AND DateFin=?)");
+        $sql=$myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE IdVehicule NOT IN (SELECT IdVehicule FROM Reservation WHERE DateDebut=? AND DateFin=?)");
         $sql->execute([$dateDepart,$dateRetour]);
         return $sql->fetchAll(PDO::FETCH_ASSOC);  
 }
 
-function SelectVehiculeWhereLocation($location){
+function GetVehiculeAccordingLocation($location){
 
     $myDb=GetConnexion();
-    $sql=$myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation WHERE IdLocalisation=? ");
+    $sql=$myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE IdLocalisation=? ");
     $sql->execute([$location]);
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 
 }
-
+function FilterVehiculeByType($type){
+    $myDb=GetConnexion();
+    $sql=$myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE IdType=?");
+    $sql->execute([$type]);
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
 ?>
