@@ -1,3 +1,12 @@
+<?php
+$connexion=filter_input(INPUT_POST,'connexion');
+
+if(isset($connexion)){
+    header("location:connexion.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -23,8 +32,8 @@
     </nav>
     <div>
         <div class="card-body p-4 p-md-5">
-            <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Inscription </h2>
-            <form method="POST" class="px-md-2">
+            <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 d-flex justify-content-center align-items-center">Inscription </h2>
+            <form method="POST" class="px-md-2 " style="margin:50px 150px" >
 
             <div class="form-outline mb-4">
                 <input type="text" name="email" id="email" placeholder="Email" class="form-control">
@@ -46,8 +55,8 @@
                         <input type="date" name="date" id="date" placeholder="Date de naissance " class="form-control">
                     </div>
                 </div>
-                <div class="form-outline mb-4">
-                <input type="submit" name="inscription" id="Inscription" value="Inscription"class="form-control btn btn-primary" >
+                <div class="form-outline mb-4 d-flex justify-content-center align-items-center">
+                <input type="submit" name="inscription" id="Inscription" value="Inscription"class="col-8 btn btn-primary" >
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                 <p>Ou</p>
