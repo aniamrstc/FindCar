@@ -1,5 +1,7 @@
 <?php
-require "Constantes.php";
+
+require_once "Constantes.php";
+
 function getConnexion()
 {
     static $myDb = null;
@@ -41,6 +43,30 @@ function FilterVehiculeByType($type)
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function GetUSers(){
+    $myDb=getConnexion();
+    $sql=$myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs ");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+// function GetInfoUsersById(){
+//     $myDb=getConnexion();
+//     $sql=$myDb->prepare("SELE")
+// }
+function getInfoLocation(){
+    $myDb=getConnexion();
+    $sql=$myDb->prepare("SELECT IdLocalisation,Nom FROM Localisation ");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+function getInfoType(){
+    $myDb=getConnexion();
+    $sql=$myDb->prepare("SELECT IdType,Type FROM TypeVehicule");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 /**
  * Il prend quatre paramètres, et les insère dans une table appelée Utilisateurs.
  */
