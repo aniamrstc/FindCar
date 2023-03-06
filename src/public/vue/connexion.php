@@ -1,3 +1,31 @@
+<?php
+
+use function PHPSTORM_META\elementType;
+
+require("../model/BDD.php");
+session_start();
+$submit = filter_input(INPUT_POST, 'inscription');
+$erreur="";
+if ($submit == "Inscription") {
+    $email = filter_input(INPUT_POST, 'email');
+    $password = filter_input(INPUT_POST, 'password');
+    if ($email != "" && $password != "") {
+        if (getIdUserByEmail($email)) {
+            $_SESSION['IdUtilisateur'] = getIdUserByEmail($email)['IdUtilisateur'];
+            if (password_verify($password, GetInfoUsersById($_SESSION['IdUtilisateur'])['MotDePasse'])) {
+                header("location:selection.php");
+            }
+        }
+        else{
+            $erreur="Email ou mot de passe incorrect. ";
+        }
+    }
+    else{
+        $erreur="Saisissez votre email et mot de passe.";
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 

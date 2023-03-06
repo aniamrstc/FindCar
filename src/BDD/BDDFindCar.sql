@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : lun. 27 fév. 2023 à 08:46
+-- Généré le : lun. 06 mars 2023 à 11:14
 -- Version du serveur :  10.3.37-MariaDB-0ubuntu0.20.04.1
 -- Version de PHP : 8.1.13
 
@@ -34,6 +34,27 @@ CREATE TABLE `Carburant` (
   `IdCarburant` int(11) NOT NULL,
   `typeCarburant` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Localisation`
+--
+
+CREATE TABLE `Localisation` (
+  `IdLocalisation` int(11) NOT NULL,
+  `Nom` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Déchargement des données de la table `Localisation`
+--
+
+INSERT INTO `Localisation` (`IdLocalisation`, `Nom`) VALUES
+(1, 'Genève'),
+(2, 'Lausanne'),
+(5, 'Berne'),
+(6, 'Zurich');
 
 -- --------------------------------------------------------
 
@@ -95,6 +116,26 @@ CREATE TABLE `Transmission` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `TypeVehicule`
+--
+
+CREATE TABLE `TypeVehicule` (
+  `IdType` int(11) NOT NULL,
+  `Type` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Déchargement des données de la table `TypeVehicule`
+--
+
+INSERT INTO `TypeVehicule` (`IdType`, `Type`) VALUES
+(1, 'Voiture'),
+(2, 'Utilitaires'),
+(5, 'Prestige');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `Utilisateurs`
 --
 
@@ -118,11 +159,14 @@ CREATE TABLE `Vehicules` (
   `IdVehicule` int(11) NOT NULL,
   `nomVehicule` text NOT NULL,
   `prixJour` varchar(100) NOT NULL,
+  `Statut` tinyint(1) NOT NULL,
   `IdNbPlaces` int(11) NOT NULL,
   `IdTransmission` int(11) NOT NULL,
   `IdCarburant` int(11) NOT NULL,
   `IdNbPortes` int(11) NOT NULL,
-  `IdMarque` int(11) NOT NULL
+  `IdMarque` int(11) NOT NULL,
+  `IdLocalisation` int(11) NOT NULL,
+  `IdType` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -134,6 +178,12 @@ CREATE TABLE `Vehicules` (
 --
 ALTER TABLE `Carburant`
   ADD PRIMARY KEY (`IdCarburant`);
+
+--
+-- Index pour la table `Localisation`
+--
+ALTER TABLE `Localisation`
+  ADD PRIMARY KEY (`IdLocalisation`);
 
 --
 -- Index pour la table `Marques`
@@ -167,6 +217,12 @@ ALTER TABLE `Transmission`
   ADD PRIMARY KEY (`IdTransmission`);
 
 --
+-- Index pour la table `TypeVehicule`
+--
+ALTER TABLE `TypeVehicule`
+  ADD PRIMARY KEY (`IdType`);
+
+--
 -- Index pour la table `Utilisateurs`
 --
 ALTER TABLE `Utilisateurs`
@@ -181,7 +237,9 @@ ALTER TABLE `Vehicules`
   ADD KEY `IdMarque` (`IdMarque`),
   ADD KEY `IdNbPlaces` (`IdNbPlaces`),
   ADD KEY `IdNbPortes` (`IdNbPortes`),
-  ADD KEY `IdTransmission` (`IdTransmission`);
+  ADD KEY `IdTransmission` (`IdTransmission`),
+  ADD KEY `IdLocalisation` (`IdLocalisation`),
+  ADD KEY `IdType` (`IdType`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -192,6 +250,12 @@ ALTER TABLE `Vehicules`
 --
 ALTER TABLE `Carburant`
   MODIFY `IdCarburant` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Localisation`
+--
+ALTER TABLE `Localisation`
+  MODIFY `IdLocalisation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `Marques`
@@ -216,6 +280,12 @@ ALTER TABLE `Portes`
 --
 ALTER TABLE `Transmission`
   MODIFY `IdTransmission` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `TypeVehicule`
+--
+ALTER TABLE `TypeVehicule`
+  MODIFY `IdType` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `Utilisateurs`
@@ -248,7 +318,9 @@ ALTER TABLE `Vehicules`
   ADD CONSTRAINT `Vehicules_ibfk_2` FOREIGN KEY (`IdMarque`) REFERENCES `Marques` (`IdMarque`),
   ADD CONSTRAINT `Vehicules_ibfk_3` FOREIGN KEY (`IdNbPlaces`) REFERENCES `Places` (`IdNbPlaces`),
   ADD CONSTRAINT `Vehicules_ibfk_4` FOREIGN KEY (`IdNbPortes`) REFERENCES `Portes` (`IdNbPorte`),
-  ADD CONSTRAINT `Vehicules_ibfk_5` FOREIGN KEY (`IdTransmission`) REFERENCES `Transmission` (`IdTransmission`);
+  ADD CONSTRAINT `Vehicules_ibfk_5` FOREIGN KEY (`IdTransmission`) REFERENCES `Transmission` (`IdTransmission`),
+  ADD CONSTRAINT `Vehicules_ibfk_6` FOREIGN KEY (`IdLocalisation`) REFERENCES `Localisation` (`IdLocalisation`),
+  ADD CONSTRAINT `Vehicules_ibfk_7` FOREIGN KEY (`IdType`) REFERENCES `TypeVehicule` (`IdType`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

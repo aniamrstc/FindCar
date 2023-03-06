@@ -51,10 +51,12 @@ function GetUSers(){
 
 }
 
-// function GetInfoUsersById(){
-//     $myDb=getConnexion();
-//     $sql=$myDb->prepare("SELE")
-// }
+function GetInfoUsersById($idUser){
+    $myDb = getConnexion();
+    $sql=$myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs WHERE IdUtilisateur=?");
+    $sql->execute([$idUser]);
+    return $sql->fetch(PDO::FETCH_ASSOC);
+}
 function getInfoLocation(){
     $myDb=getConnexion();
     $sql=$myDb->prepare("SELECT IdLocalisation,Nom FROM Localisation ");
@@ -92,4 +94,9 @@ function userExists($email)
     return $query->fetch(PDO::FETCH_ASSOC);
 
 }
-?>
+function getIdUserByEmail($email){
+    $myDb=getConnexion();
+    $sql=$myDb->prepare("SELECT IdUtilisateur FROM Utilisateurs WHERE Email=?");
+    $sql->execute([$email]);
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
