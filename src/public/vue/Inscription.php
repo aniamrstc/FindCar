@@ -1,7 +1,7 @@
 <?php
 $connexion=filter_input(INPUT_POST,'connexion');
 
-if(isset($connexion)){
+if(isset($_POST['connexion'])){
     header("location:connexion.php");
 }
 
