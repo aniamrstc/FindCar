@@ -11,12 +11,12 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="../../assets/LogoMini.PNG" alt="" width="50" height="50">
+            <a class="navbar-brand" href="./index.php">
+                <img src="../../assets/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
             </a>
-            <a class="d-flex" href="#">
+            <a class="d-flex" href="./connexion.php">
                 <i class="fa-solid fa-user"></i>
             </a>
         </div>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="form-outline mb-4 d-flex justify-content-center align-items-center">
-                    <input type="submit" name="connexion" id="Connexion" value="Connexion" class=" col-8 btn btn-primary">
+                    <input type="submit" name="connexion" id="Connexion" value="Connexion" class="col-8 btn btn-primary">
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                     <p>Ou</p>
