@@ -38,6 +38,7 @@ if (isset($inscription)) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/865258096d.js" crossorigin="anonymous"></script>
+    <script src="../../assets/js/showMyPassword.js"></script>
     <title>Inscription</title>
 </head>
 
@@ -45,7 +46,7 @@ if (isset($inscription)) {
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="./index.php">
-                <img src="../../assets/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
+                <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
             </a>
             <a class="d-flex" href="./connexion.php">
                 <i class="fa-solid fa-user"></i>
@@ -62,17 +63,20 @@ if (isset($inscription)) {
                     <input type="text" name="email" id="email" placeholder="Email" class="form-control">
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6 mb-2">
 
                         <input type="password" name="password" id="password" placeholder="Mot de passe"
                             class="form-control">
                     </div>
-                    <div class="col-md-6 mb-4">
-                        <input type="password" name="Retypepassword" id="Retypepassword"
-                            placeholder=" Confirmer le mot de passe" class="form-control">
+                    <div class="col-md-6 mb-2">
+                        <input type="password" name="Retypepassword" id="Retypepassword" placeholder=" Confirmer le mot de passe" class="form-control">
                     </div>
+                    <label for="showPassWord" id="showMyPassword">
+                        <input type="checkbox" name="showMyPassword" id="showMyPassword" onclick="ShowMyPassword()">
+                        <span class="ml-2">Afficher le mot de passe</span>
+                    </label>
                 </div>
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-md-6 mb-4">
                         <input type="text" name="numPermis" id="numPermis" placeholder="Numéro de permis"
                             class="form-control">
