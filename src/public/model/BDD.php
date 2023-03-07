@@ -100,3 +100,19 @@ function getIdUserByEmail($email){
     $sql->execute([$email]);
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
+function getCarburant(){
+
+    $myDb=getConnexion();
+    $sql=$myDb->prepare("SELECT IdCarburant,typeCarburant FROM Carburant");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+
+}
+function getTransmission(){
+
+    $myDb=getConnexion();
+    $sql=$myDb->prepare("SELECT IdTransmission,typeTransmission FROM Transmission");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+
+}
