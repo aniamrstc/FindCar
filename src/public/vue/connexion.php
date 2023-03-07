@@ -1,27 +1,35 @@
 <?php
 
-use function PHPSTORM_META\elementType;
 
 require("../model/BDD.php");
 session_start();
-$submit = filter_input(INPUT_POST, 'inscription');
-$erreur="";
-if ($submit == "Inscription") {
+$submit = filter_input(INPUT_POST, 'connexion');
+$erreur = [];
+if (isset($_POST['inscription'])) {
+    header("location:inscription.php");
+    exit;
+}
+if ($submit == "Connexion") {
     $email = filter_input(INPUT_POST, 'email');
-    $password = filter_input(INPUT_POST, 'password');
+    $password = filter_input(INPUT_POST, 'MotDePasse');
     if ($email != "" && $password != "") {
         if (getIdUserByEmail($email)) {
-            $_SESSION['IdUtilisateur'] = getIdUserByEmail($email)['IdUtilisateur'];
-            if (password_verify($password, GetInfoUsersById($_SESSION['IdUtilisateur'])['MotDePasse'])) {
-                header("location:selection.php");
+            $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);
+            
+            foreach ( $_SESSION['IdUtilisateur'] as $idUser) {
+                $utilisateur = GetInfoUsersById($idUser['IdUtilisateur']);
             }
+            if (password_verify($password, $utilisateur['MotDePasse'])) {
+                header("location:selection.php");
+                exit;
+            }else{
+                $erreur[] ="Mot de passe incorrect. ";
+            }
+        } else {
+            $erreur[] = "Email incorrect. ";
         }
-        else{
-            $erreur="Email ou mot de passe incorrect. ";
-        }
-    }
-    else{
-        $erreur="Saisissez votre email et mot de passe.";
+    } else {
+        $erreur[] = "Saisissez votre email et mot de passe.";
     }
 }
 
@@ -39,7 +47,7 @@ if ($submit == "Inscription") {
 </head>
 
 <body>
-<nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="./index.php">
                 <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
@@ -50,6 +58,11 @@ if ($submit == "Inscription") {
         </div>
     </nav>
     <div>
+        <p><?php if (isset($erreur)) {
+                foreach($erreur as $uneErreur){
+                    echo $uneErreur;
+                }
+            } ?></p>
         <div class="card-body p-4 p-md-5 ">
             <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 d-flex justify-content-center align-items-center">Connexion </h2>
             <form method="POST" class="px-md-2" style="margin:50px 150px">
@@ -59,7 +72,7 @@ if ($submit == "Inscription") {
                         <input type="text" name="email" id="email" placeholder="Email" class="form-control">
                     </div>
                     <div class="col-md-6 mb-4">
-                        <input type="password" name="password" id="password" placeholder="Mot de passe" class="form-control">
+                        <input type="password" name="MotDePasse" id="password" placeholder="Mot de passe" class="form-control">
                     </div>
                 </div>
                 <div class="form-outline mb-4 d-flex justify-content-center align-items-center">
@@ -75,5 +88,34 @@ if ($submit == "Inscription") {
         </div>
     </div>
 </body>
+<footer class="text-center text-white fixed-bottom bg-dark">
+
+<div class="container p-4">
+    <img src="../../assets/images/LogoMiniNom-removebg-preview.png" width="150" height="50">
+</div>
+<section class="mb-4">
+    <!-- Facebook -->
+    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+
+    <!-- Twitter -->
+    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+
+    <!-- Google -->
+    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
+
+    <!-- Instagram -->
+    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+
+    <!-- Linkedin -->
+    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+
+    <!-- Github -->
+    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
+</section>
+<div class="text-center p-3 bg-dark">
+    © 2020 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+</div>
+</footer>
 
 </html>

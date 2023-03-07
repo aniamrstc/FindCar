@@ -55,7 +55,7 @@ if(isset($_POST['rechercher'])){
                 <div class="btn-group mb-3" role="group" aria-label="Basic example">
                     
                     <select class="form-control" name="typeVehicule" id="typeVehicule-select">
-                        <option value="">--Please choose an option--</option>
+                        <option value="">--Choissisez une option--</option>
                         <?php foreach($arrayType as $type){?>
                         <option value="<?=$type['IdType']?>"><?=$type['Type']?></option>
                         <?php } ?>
@@ -66,7 +66,7 @@ if(isset($_POST['rechercher'])){
                 <div class="col">
                 <label for="lieuDepart">Lieu de départ et de retour :</label>
                     <select class="form-control" name="lieuDepartRetour" id="depart/retour-select">
-                        <option value="">--Please choose an option--</option>
+                        <option value="">--Choissisez une option--</option>
                         <?php foreach($arrayLocation as $location){?>
                         <option value="<?=$location['IdLocalisation']?>"><?=$location['Nom']?></option>
                         <?php } ?>
