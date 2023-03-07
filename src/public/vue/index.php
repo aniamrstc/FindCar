@@ -13,6 +13,7 @@ if(isset($_POST['rechercher'])){
     $_SESSION['AllVehiculeAvailable']=GetAllVehiculeAvailable($dateDepart,$dateRetour);
     $_SESSION['VehiculeAccordingLocation']=GetVehiculeAccordingLocation($lieuDepartRetour);
     $_SESSION['VehiculeByType']=FilterVehiculeByType($type);
+    $_SESSION['arrayVehicules']=GetVehiculeByFiltre($type,$lieuDepartRetour,$dateDepart,$dateRetour);
     header("location:selection.php");
 }
 ?>

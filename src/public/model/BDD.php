@@ -17,55 +17,58 @@ function getConnexion()
     }
     return $myDb;
 }
-function GetAllVehiculeAvailable($dateDepart, $dateRetour)
+
+function GetVehiculeByFiltre($type, $location, $dateDepart, $dateRetour)
 {
 
     $myDb = getConnexion();
-    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE IdVehicule NOT IN (SELECT IdVehicule FROM Reservation WHERE DateDebut=? AND DateFin=?)");
-    $sql->execute([$dateDepart, $dateRetour]);
-    return $sql->fetchAll(PDO::FETCH_ASSOC);
+    $sql ="SELECT IdVehicule,nomVehicule,prixJour,Statut,imageVoiture,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE 1=1";
+    
+    if (!empty($type)) {
+        $sql .= " AND IdType='$type'";
+    }
+    if (!empty($location)) {
+        $sql .= " AND IdLocalisation='$location'";
+    }
+    if (!empty($dateDepart && $dateRetour)) {
+        $sql .= " AND IdVehicule NOT IN (SELECT IdVehicule FROM Reservation WHERE DateDebut='$dateDepart' AND DateFin='$dateRetour')";
+    }
+    $stmt = $myDb->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-function GetVehiculeAccordingLocation($location)
-{
-
-    $myDb = GetConnexion();
-    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,Vehicules.IdLocalisation,IdType FROM Vehicules,Localisation WHERE  Vehicules.IdLocalisation=Localisation.IdLocalisation AND Localisation.IdLocalisation= ? ");
-    $sql->execute([$location]);
-    return $sql->fetchAll(PDO::FETCH_ASSOC);
-
-}
-function FilterVehiculeByType($type)
-{
-    $myDb = GetConnexion();
-    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,Vehicules.IdType FROM Vehicules,TypeVehicule WHERE Vehicules.IdType=TypeVehicule.IdType AND TypeVehicule.IdType=?");
-    $sql->execute([$type]);
-    return $sql->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function GetUSers(){
-    $myDb=getConnexion();
-    $sql=$myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs ");
+function getInfoVehiculeByID($idVehicule){
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs ");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
-
+}
+function GetUSers()
+{
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs ");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function GetInfoUsersById($idUser){
+function GetInfoUsersById($idUser)
+{
     $myDb = getConnexion();
-    $sql=$myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs WHERE IdUtilisateur=?");
+    $sql = $myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs WHERE IdUtilisateur=?");
     $sql->execute([$idUser]);
     return $sql->fetch(PDO::FETCH_ASSOC);
 }
-function getInfoLocation(){
-    $myDb=getConnexion();
-    $sql=$myDb->prepare("SELECT IdLocalisation,Nom FROM Localisation ");
+function getInfoLocation()
+{
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdLocalisation,Nom FROM Localisation ");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
-function getInfoType(){
-    $myDb=getConnexion();
-    $sql=$myDb->prepare("SELECT IdType,Type FROM TypeVehicule");
+function getInfoType()
+{
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdType,Type FROM TypeVehicule");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -78,7 +81,6 @@ function newUser($email, $password, $nPermis, $date)
     INSERT INTO `Utilisateurs`(`email`, `MotDePasse`, `NbPermis`, `Date`, `Actif`, `Admin`) 
     VALUES ( ?, ?, ?, ?,'Actif', false);");
     $query->execute([$email, $password, $nPermis, $date]);
-
 }
 
 /**
@@ -92,31 +94,34 @@ function userExists($email)
         ");
     $query->execute([$email]);
     return $query->fetch(PDO::FETCH_ASSOC);
-
 }
-function getIdUserByEmail($email){
-    $myDb=getConnexion();
-    $sql=$myDb->prepare("SELECT IdUtilisateur FROM Utilisateurs WHERE Email=?");
+function getIdUserByEmail($email)
+{
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdUtilisateur FROM Utilisateurs WHERE Email=?");
     $sql->execute([$email]);
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
-function getCarburant(){
+function getCarburant()
+{
 
-    $myDb=getConnexion();
-    $sql=$myDb->prepare("SELECT IdCarburant,typeCarburant FROM Carburant");
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdCarburant,typeCarburant FROM Carburant");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
-
 }
-function getTransmission(){
+function getTransmission()
+{
 
-    $myDb=getConnexion();
-    $sql=$myDb->prepare("SELECT IdTransmission,typeTransmission FROM Transmission");
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdTransmission,typeTransmission FROM Transmission");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
-
 }
-function searchCar($carName){
-$myDb=getConnexion();
-$sql=$myDb->prepare("SELECT")
+function searchCar($carName)
+{
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE nomVehicule LIKE '$carName%'");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
 }

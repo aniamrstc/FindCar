@@ -20,7 +20,7 @@ if ($submit == "Connexion") {
                 $utilisateur = GetInfoUsersById($idUser['IdUtilisateur']);
             }
             if (password_verify($password, $utilisateur['MotDePasse'])) {
-                header("location:selection.php");
+                header("location:index.php");
                 exit;
             }else{
                 $erreur[] ="Mot de passe incorrect. ";

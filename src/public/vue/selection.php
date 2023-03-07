@@ -1,5 +1,6 @@
 <?php
 require("../model/BDD.php");
+session_start();
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
 ?>
@@ -59,6 +60,7 @@ $arrayTransmission = getTransmission();
         </div>
         <div class="col py-3">
         <section style="background-color: #eee;">
+        <?php foreach ($_SESSION['arrayVehicules'] as $vehicule){?>
               <div class="container py-5">
                 <div class="row justify-content-center mb-3">
                   <div class="col-md-12 col-xl-10">
@@ -67,7 +69,7 @@ $arrayTransmission = getTransmission();
                         <div class="row">
                           <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                             <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                              <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(4).webp" class="w-100" />
+                            <?php echo '<img  class="w-100" src="data:image/jpeg;base64,' . base64_encode($vehicule['imageVoiture']) . '"/>'; ?>
                               <a href="#!">
                                 <div class="hover-overlay">
                                   <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
@@ -76,7 +78,7 @@ $arrayTransmission = getTransmission();
                             </div>
                           </div>
                           <div class="col-md-6 col-lg-6 col-xl-6">
-                            <h5>Quant trident shirts</h5>
+                            <h5><?=$vehicule['IdMarque'].$vehicule['nomVehicule']?></h5>
                             
                             <div class="mt-1 mb-0 text-muted small">
                               <span>100% cotton</span>
@@ -105,10 +107,8 @@ $arrayTransmission = getTransmission();
                             </div>
                             <h6 class="text-success">Free shipping</h6>
                             <div class="d-flex flex-column mt-4">
-                              <button class="btn btn-primary btn-sm" type="button">Details</button>
-                              <button class="btn btn-outline-primary btn-sm mt-2" type="button">
-                                Add to wishlist
-                              </button>
+                              <button class="btn btn-primary btn-sm" type="button">Sélectionner -></button>
+                             
                             </div>
                           </div>
                         </div>
@@ -116,6 +116,7 @@ $arrayTransmission = getTransmission();
                     </div>
                   </div>
                 </div>
+                <?php }?>
                 </section>
         </div>
     </div>
