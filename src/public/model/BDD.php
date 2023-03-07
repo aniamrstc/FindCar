@@ -116,3 +116,7 @@ function getTransmission(){
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 
 }
+function searchCar($carName){
+$myDb=getConnexion();
+$sql=$myDb->prepare("SELECT")
+}
