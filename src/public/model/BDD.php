@@ -30,7 +30,7 @@ function GetVehiculeAccordingLocation($location)
 {
 
     $myDb = GetConnexion();
-    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE IdLocalisation=? ");
+    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules,Localisation WHERE  Vehicules.IdLocalisation=Localisation.IdLocalisation AND Localisation.IdLocalisation= ? ");
     $sql->execute([$location]);
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -38,7 +38,7 @@ function GetVehiculeAccordingLocation($location)
 function FilterVehiculeByType($type)
 {
     $myDb = GetConnexion();
-    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE IdType=?");
+    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules,TypeVehicule WHERE Vehicules.IdType=TypeVehicule.IdType AND TypeVehicule=?");
     $sql->execute([$type]);
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
