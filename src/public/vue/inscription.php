@@ -1,5 +1,6 @@
 <?php
 require("../model/BDD.php");
+session_start();
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 $password2 = filter_input(INPUT_POST, 'Retypepassword', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -22,6 +23,7 @@ if (isset($inscription)) {
             } else {
                 $passwordHash = password_hash($password, PASSWORD_BCRYPT);
                 newUser($email, $passwordHash, $numPermis, $date);
+                $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);
             }
         }
     }
