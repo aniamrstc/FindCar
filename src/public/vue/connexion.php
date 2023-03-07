@@ -50,7 +50,7 @@ if ($submit == "Connexion") {
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="./index.php">
-                <img src="../../assets/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
+                <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
             </a>
             <a class="d-flex" href="./connexion.php">
                 <i class="fa-solid fa-user"></i>
