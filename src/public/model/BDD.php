@@ -1,3 +1,8 @@
+<!-- 
+    Projet : FindCar
+    Auteur : Ania Marostica, Liliana Santos
+    Date : 20.02.2023
+ -->
 <?php
 
 require_once "Constantes.php";
@@ -125,3 +130,4 @@ function searchCar($carName)
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
+

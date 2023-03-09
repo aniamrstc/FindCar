@@ -47,6 +47,7 @@ if (isset($inscription)) {
                 if ($age > 18) {
                     newUser($email, $passwordHash, $numPermis, $date);
                     $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);
+                    header("location: connexion.php");
                 } else {
                     $messageError .= nl2br("Vous devez etre majeur pour vous inscrire \n");
                 }
