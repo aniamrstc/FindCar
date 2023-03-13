@@ -7,6 +7,12 @@
 
 require_once "Constantes.php";
 
+/**
+ * Si la connexion à la base de données n'est pas déjà établie, établissez-la et renvoyez-la, sinon
+ * renvoyez simplement la connexion déjà établie.
+ * 
+ * @return un objet PDO.
+ */
 function getConnexion()
 {
     static $myDb = null;
@@ -22,6 +28,7 @@ function getConnexion()
     }
     return $myDb;
 }
+
 
 function GetVehiculeByFiltre($type, $location, $dateDepart, $dateRetour)
 {
@@ -42,12 +49,11 @@ function GetVehiculeByFiltre($type, $location, $dateDepart, $dateRetour)
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-function getInfoVehiculeByID($idVehicule){
-    $myDb = getConnexion();
-    $sql = $myDb->prepare("SELECT IdUtilisateur,Email,MotDePasse,NbPermis,Date,Actif,Admin FROM Utilisateurs ");
-    $sql->execute();
-    return $sql->fetchAll(PDO::FETCH_ASSOC);
-}
+/**
+ * Il obtient tous les utilisateurs de la base de données.
+ * 
+ * @return Un tableau de tableaux associatifs.
+ */
 function GetUSers()
 {
     $myDb = getConnexion();
@@ -56,6 +62,13 @@ function GetUSers()
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Il renvoie un tableau des informations de l'utilisateur à partir de la base de données.
+ * 
+ * @param idUser l'identifiant de l'utilisateur dont vous souhaitez obtenir les informations
+ * 
+ * @return Un tableau des informations de l'utilisateur.
+ */
 function GetInfoUsersById($idUser)
 {
     $myDb = getConnexion();
@@ -63,6 +76,7 @@ function GetInfoUsersById($idUser)
     $sql->execute([$idUser]);
     return $sql->fetch(PDO::FETCH_ASSOC);
 }
+
 function getInfoLocation()
 {
     $myDb = getConnexion();
@@ -127,6 +141,19 @@ function searchCar($carName)
 {
     $myDb = getConnexion();
     $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE nomVehicule LIKE '$carName%'");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+function getAllVehicule(){
+
+  $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType,imageVoiture FROM Vehicules ");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+function newVehicule(){
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("INSERT INTO Vehicules (IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType,imageVoiture) VALUES(?,?,?,)");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }

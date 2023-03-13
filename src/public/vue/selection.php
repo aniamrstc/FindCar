@@ -5,7 +5,7 @@ $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
 $dateRetour=new DateTime($_SESSION['dateRetour']);
 $dateDepart=new DateTime($_SESSION['dateDepart']);
-$nbJour=$dateRetour->diff($dateDepart);
+$nbJour=$dateDepart->diff($dateRetour);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +96,7 @@ $nbJour=$dateRetour->diff($dateDepart);
                         <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                           <div class="d-flex flex-row align-items-center mb-1">
                             <h4 class="mb-1 me-1"><?=$vehicule['prixJour']?> CHF/Jour</h4>
-                            <h4 class="mb-1 me-1"><?=$vehicule['prixJour']*$nbJour?> CHF/Total</h4>
+                            <h4 class="mb-1 me-1"><?=$prixTotal=$vehicule['prixJour']?> CHF/Total</h4>
                           </div>
                          
                           <div class="d-flex flex-column mt-4">

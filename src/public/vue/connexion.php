@@ -23,6 +23,11 @@ if ($submit == "Connexion") {
     /* Il vérifie si l'e-mail et le mot de passe ne sont pas vides. */
     if ($email != "" && $password != "") {
        
+        if($email==EMAIL_ADMIN && $password==MDP_ADMIN)
+        {
+            header("location:AjoutVehicules.php");
+            exit;
+        }
         if (getIdUserByEmail($email)) {
 
             $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);

@@ -44,7 +44,7 @@ if (isset($inscription)) {
             } else {
                 $passwordHash = password_hash($password, PASSWORD_BCRYPT);
                 /* Vérifier si l'utilisateur a plus de 18 ans. */
-                if ($age > 18) {
+                if ($age >= 18) {
                     newUser($email, $passwordHash, $numPermis, $date);
                     $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);
                     header("location: connexion.php");
