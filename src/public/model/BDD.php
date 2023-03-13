@@ -131,3 +131,29 @@ function searchCar($carName)
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function filterPageSelection($carburant, $prixJour, $transmission)
+{   
+    $myDb = getConnexion();
+    $sql ="SELECT `IdVehicule`, `nomVehicule`, `prixJour`, `Statut`, `imageVoiture`, `Vehicules`.`IdNbPlaces`, `Vehicules`.`IdTransmission`, `Vehicules`.`IdCarburant`, `Vehicules`.`IdNbPortes`,`Vehicules`.`IdMarque`, `IdLocalisation`, `IdType`, `Transmission`.`typeTransmission`,`Carburant`.`typeCarburant`,`Places`.`nbPlace`,`Portes`.`NbPorte`,`Marques`.`Marque` 
+    FROM `Vehicules`, `Transmission`,`Carburant`,`Portes`,`Places`,`Marques`
+    WHERE 1 
+    AND `Vehicules`.`IdNbPlaces` = `Places`.`IdNbPlaces`
+    AND `Vehicules`.`IdTransmission` = `Transmission`.`IdTransmission` 
+    AND `Vehicules`.`IdNbPortes` = `Portes`.`IdNbPorte`
+    AND `Vehicules`.`IdMarque` = `Marques`.`IdMarque` 
+    AND `Vehicules`.`IdCarburant` = `Carburant`.`IdCarburant`";
+    
+    if (!empty($carburant)) {
+        $sql .= " AND `typeCarburant`='$carburant'";
+    }
+    if (!empty($prixJour)) {
+        $sql .= " AND `prixJour` = '$prixJour'";
+    }
+    if (!empty($transmission)) {
+        $sql .= " AND `typeTransmission` = '$transmission'";
+    }
+  
+    $stmt = $myDb->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
