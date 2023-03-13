@@ -27,7 +27,7 @@ function GetVehiculeByFiltre($type, $location, $dateDepart, $dateRetour)
 {
 
     $myDb = getConnexion();
-    $sql ="SELECT IdVehicule,nomVehicule,prixJour,Statut,imageVoiture,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE 1=1";
+    $sql ="SELECT IdVehicule, nomVehicule, prixJour, Statut, imageVoiture, Vehicules.IdNbPlaces, Vehicules.IdTransmission, Vehicules.IdCarburant, Vehicules.IdNbPortes, Vehicules.IdMarque, IdLocalisation, IdType,Transmission.typeTransmission,Places.nbPlace, Portes.NbPorte,Marques.Marque,Carburant.typeCarburant FROM Vehicules,Portes,Places,Transmission,Marques,Carburant WHERE 1=1 AND Vehicules.IdNbPlaces =Places.IdNbPlaces AND Vehicules.IdTransmission = Transmission.IdTransmission AND Vehicules.IdNbPortes=Portes.IdNbPorte AND Vehicules.IdMarque=Marques.IdMarque AND Vehicules.IdCarburant=Carburant.IdCarburant";
     
     if (!empty($type)) {
         $sql .= " AND IdType='$type'";

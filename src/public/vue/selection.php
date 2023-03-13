@@ -3,6 +3,9 @@ require("../model/BDD.php");
 session_start();
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
+$dateRetour=new DateTime($_SESSION['dateRetour']);
+$dateDepart=new DateTime($_SESSION['dateDepart']);
+$nbJour=$dateRetour->diff($dateDepart);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,91 +39,81 @@ $arrayTransmission = getTransmission();
   </nav>
   <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-            <legend>Type de carburant</legend>
-              <div class="form-check">
-                <?php foreach ($arrayCarburant as $carburant) { ?>
-                  <input class="form-check-input" name="carburant" type="checkbox" value="<?= $carburant['typeCarburant'] ?>" id="<?= $carburant['IdCarburant'] ?>"><?= $carburant['typeCarburant'] ?><br>
-                <?php } ?>
-              </div>
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+          <legend>Type de carburant</legend>
+          <div class="form-check">
+            <?php foreach ($arrayCarburant as $carburant) { ?>
+              <input class="form-check-input" name="carburant" type="checkbox" value="<?= $carburant['typeCarburant'] ?>" id="<?= $carburant['IdCarburant'] ?>"><?= $carburant['typeCarburant'] ?><br>
+            <?php } ?>
+          </div>
 
-              <legend>Prix</legend>
-              <div class="form-group mt-3">
-                <input type="range" class="form-control-range" id="slider1">
-              </div>
+          <legend>Prix</legend>
+          <div class="form-group mt-3">
+            <input type="range" class="form-control-range" id="slider1">
+          </div>
 
-              <legend>Transmission</legend>
-              <div class="form-check">
-                <?php foreach ($arrayTransmission as $transmission) { ?>
-                  <input class="form-check-input" name="transmission" type="checkbox" value="<?= $transmission['typeTransmission'] ?>" id="<?= $transmission['IdTransmission'] ?>"><?= $transmission['typeTransmission'] ?><br>
-                <?php } ?>
-              </div>
-            </div>
+          <legend>Transmission</legend>
+          <div class="form-check">
+            <?php foreach ($arrayTransmission as $transmission) { ?>
+              <input class="form-check-input" name="transmission" type="checkbox" value="<?= $transmission['typeTransmission'] ?>" id="<?= $transmission['IdTransmission'] ?>"><?= $transmission['typeTransmission'] ?><br>
+            <?php } ?>
+          </div>
         </div>
-        <div class="col py-3">
+      </div>
+      <div class="col py-3">
         <section style="background-color: #eee;">
-        <?php foreach ($_SESSION['arrayVehicules'] as $vehicule){?>
-              <div class="container py-5">
-                <div class="row justify-content-center mb-3">
-                  <div class="col-md-12 col-xl-10">
-                    <div class="card shadow-0 border rounded-3">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+          <?php foreach ($_SESSION['arrayVehicules'] as $vehicule) { ?>
+            <div class="container py-5">
+              <div class="row justify-content-center mb-3">
+                <div class="col-md-12 col-xl-10">
+                  <div class="card shadow-0 border rounded-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                          <div class="bg-image hover-zoom ripple rounded ripple-surface">
                             <?php echo '<img  class="w-100" src="data:image/jpeg;base64,' . base64_encode($vehicule['imageVoiture']) . '"/>'; ?>
-                              <a href="#!">
-                                <div class="hover-overlay">
-                                  <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
-                                </div>
-                              </a>
-                            </div>
+                            <a href="#!">
+                              <div class="hover-overlay">
+                                <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                              </div>
+                            </a>
                           </div>
-                          <div class="col-md-6 col-lg-6 col-xl-6">
-                            <h5><?=$vehicule['IdMarque'].$vehicule['nomVehicule']?></h5>
-                            
-                            <div class="mt-1 mb-0 text-muted small">
-                              <span>100% cotton</span>
-                              <span class="text-primary"> • </span>
-                              <span>Light weight</span>
-                              <span class="text-primary"> • </span>
-                              <span>Best finish<br /></span>
-                            </div>
-                            <div class="mb-2 text-muted small">
-                              <span>Unique design</span>
-                              <span class="text-primary"> • </span>
-                              <span>For men</span>
-                              <span class="text-primary"> • </span>
-                              <span>Casual<br /></span>
-                            </div>
-                            <p class="text-truncate mb-4 mb-md-0">
-                              There are many variations of passages of Lorem Ipsum available, but the
-                              majority have suffered alteration in some form, by injected humour, or
-                              randomised words which don't look even slightly believable.
-                            </p>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                          <h5><?= $vehicule['Marque'] . " " . $vehicule['nomVehicule'] ?></h5>
+
+                          <div class="mt-1 mb-0 text-muted small">
+                            <span><?= $vehicule['typeTransmission'] ?></span>
+                            <span class="text-primary"> • </span>
+                            <span>Nombres de places : <?= $vehicule['nbPlace'] ?></span>
+                            <span class="text-primary"> • </span>
+                            <span>Nombres de portes : <?= $vehicule['NbPorte'] ?></span>
+                            <span class="text-primary"> • </span>
+                            <span><?= $vehicule['typeCarburant'] ?></span>
                           </div>
-                          <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                            <div class="d-flex flex-row align-items-center mb-1">
-                              <h4 class="mb-1 me-1">$13.99</h4>
-                              <span class="text-danger"><s>$20.99</s></span>
-                            </div>
-                            <h6 class="text-success">Free shipping</h6>
-                            <div class="d-flex flex-column mt-4">
-                              <button class="btn btn-primary btn-sm" type="button">Sélectionner -></button>
-                             
-                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                          <div class="d-flex flex-row align-items-center mb-1">
+                            <h4 class="mb-1 me-1"><?=$vehicule['prixJour']?> CHF/Jour</h4>
+                            <h4 class="mb-1 me-1"><?=$vehicule['prixJour']*$nbJour?> CHF/Total</h4>
+                          </div>
+                         
+                          <div class="d-flex flex-column mt-4">
+                            <button class="btn btn-primary btn-sm" type="button">Sélectionner -></button>
+
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <?php }?>
-                </section>
-        </div>
+              </div>
+            <?php } ?>
+        </section>
+      </div>
     </div>
-</div>
+  </div>
 
 
 </body>

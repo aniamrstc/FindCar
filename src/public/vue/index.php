@@ -16,12 +16,11 @@ $dateDepart=filter_input(INPUT_POST,'dateDepart');
 $dateRetour=filter_input(INPUT_POST,'dateRetour');
 $type=filter_input(INPUT_POST,'typeVehicule');
 if(isset($_POST['rechercher'])){
-    $_SESSION['AllVehiculeAvailable']=GetAllVehiculeAvailable($dateDepart,$dateRetour);
-    $_SESSION['VehiculeAccordingLocation']=GetVehiculeAccordingLocation($lieuDepartRetour);
-    $_SESSION['VehiculeByType']=FilterVehiculeByType($type);
     $_SESSION['arrayVehicules']=GetVehiculeByFiltre($type,$lieuDepartRetour,$dateDepart,$dateRetour);
-
+    $_SESSION['dateDepart']=$dateDepart;
+    $_SESSION['dateRetour']=$dateRetour;
     header("location:selection.php");
+
 }
 ?>
 <!DOCTYPE html>
