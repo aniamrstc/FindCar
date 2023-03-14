@@ -5,20 +5,18 @@
  -->
 <?php
 require("../model/BDD.php");
+require("./navbarFooter.php");
 
-session_start();
-
-
-$arrayLocation=getInfoLocation();
-$arrayType=getInfoType();
-$lieuDepartRetour=filter_input(INPUT_POST,'lieuDepartRetour');
-$dateDepart=filter_input(INPUT_POST,'dateDepart');
-$dateRetour=filter_input(INPUT_POST,'dateRetour');
-$type=filter_input(INPUT_POST,'typeVehicule');
-if(isset($_POST['rechercher'])){
-    $_SESSION['arrayVehicules']=GetVehiculeByFiltre($type,$lieuDepartRetour,$dateDepart,$dateRetour);
-    $_SESSION['dateDepart']=$dateDepart;
-    $_SESSION['dateRetour']=$dateRetour;
+$arrayLocation = getInfoLocation();
+$arrayType = getInfoType();
+$lieuDepartRetour = filter_input(INPUT_POST, 'lieuDepartRetour');
+$dateDepart = filter_input(INPUT_POST, 'dateDepart');
+$dateRetour = filter_input(INPUT_POST, 'dateRetour');
+$type = filter_input(INPUT_POST, 'typeVehicule');
+if (isset($_POST['rechercher'])) {
+    $_SESSION['arrayVehicules'] = GetVehiculeByFiltre($type, $lieuDepartRetour, $dateDepart, $dateRetour);
+    $_SESSION['dateDepart'] = $dateDepart;
+    $_SESSION['dateRetour'] = $dateRetour;
     header("location:selection.php");
 
 }
@@ -45,16 +43,6 @@ if(isset($_POST['rechercher'])){
 </head>
 
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="./index.php">
-                <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
-            </a>
-            <a class="d-flex" href="./connexion.php">
-                <i class="fa-solid fa-user"></i>
-            </a>
-        </div>
-    </nav>
     <div class="container mt-5">
         <form method="POST">
             <div class="col-sm-12 selectVehicle">
@@ -104,38 +92,7 @@ if(isset($_POST['rechercher'])){
             </div>
         </form>
     </div>
-    <footer class="text-center text-white fixed-bottom bg-dark">
 
-        <div class="container p-4">
-            <img src="../../assets/images/LogoMiniNom-removebg-preview.png" width="150" height="50">
-        </div>
-        <section class="mb-4">
-            <!-- Facebook -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                    class="fab fa-facebook-f"></i></a>
-
-            <!-- Twitter -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
-
-            <!-- Google -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
-
-            <!-- Instagram -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                    class="fab fa-instagram"></i></a>
-
-            <!-- Linkedin -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                    class="fab fa-linkedin-in"></i></a>
-
-            <!-- Github -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
-        </section>
-        <div class="text-center p-3 bg-dark">
-            © 2020 Copyright:
-            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-        </div>
-    </footer>
 </body>
 
 </html>
