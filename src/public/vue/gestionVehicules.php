@@ -2,6 +2,13 @@
 require("../model/BDD.php");
 
 $arrayVehicule=getAllVehicule();
+$idVehicule=filter_input(INPUT_POST,'idVehicule');
+if(isset($_POST['supprimer'])){
+
+  deleteVehicule($idVehicule);
+  header("refresh:0");
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -38,16 +45,19 @@ $arrayVehicule=getAllVehicule();
   </span>
 </div>
     <?php foreach($arrayVehicule as $vehicule){?>
+      <form method="POST">
         <div class="card" style="width: 18rem;">
         <?php echo '<img  class="w-100" src="data:image/jpeg;base64,' . base64_encode($vehicule['imageVoiture']) . '"/>'; ?>
   <div class="card-body">
     <h5 class="card-title"><?= $vehicule['nomVehicule']?></h5>
+    <input type="hidden" name="idVehicule" value="<?=$vehicule['IdVehicule']?>">
    
     <input class="btn btn-primary" type="submit" name="modifier" id="moifier" value="Modifier">
     <input class="btn btn-danger" type="submit" name="supprimer" id="supprimer" value="Supprimer">
   
   </div>
 </div>
+</form>
 <?php } ?>
 </body>
 <footer class="text-center text-white fixed-bottom bg-dark">

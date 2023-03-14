@@ -201,3 +201,8 @@ function getMarque(){
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
+function deleteVehicule($IdVehicule){
+    $myDb=getConnexion();
+    $sql = $myDb->prepare("DELETE FROM Vehicules WHERE IdVehicule=? ");
+    $sql->execute([$IdVehicule]);
+}

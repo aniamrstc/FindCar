@@ -27,7 +27,7 @@ if (isset($_POST['ajouter'])) {
         $img = file_get_contents($image);
         if (newVehicule($nom, $prix, $img, $nbPlace, $transmission, $carburant, $nbPorte, $marque, $location, $type)==true) {
           
-            $succes = "La voiture a bien été ajouter";
+            $succes = "La voiture a bien été ajouté";
         }
     } else {
         $erreur[] = "Vous devez remplir tous les champs ";
