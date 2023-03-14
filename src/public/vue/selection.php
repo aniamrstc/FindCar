@@ -1,5 +1,6 @@
 <?php
 require("../model/BDD.php");
+require("./navbarFooter.php");
 session_start();
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
@@ -28,29 +29,22 @@ if ($rechercher = "Rechercher") {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   <script src="https://kit.fontawesome.com/865258096d.js" crossorigin="anonymous"></script>
   <title>selection</title>
 </head>
 
 <body>
 
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="./index.php">
-        <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
-      </a>
-      <a class="d-flex" href="./connexion.php">
-        <i class="fa-solid fa-user"></i>
-      </a>
-    </div>
-  </nav>
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -59,7 +53,8 @@ if ($rechercher = "Rechercher") {
             <legend>Type de carburant</legend>
             <div class="form-check">
               <?php foreach ($arrayCarburant as $carburant) { ?>
-                <input class="form-check-input" name="carburant" type="checkbox" value="<?= $carburant['typeCarburant'] ?>" id="<?= $carburant['IdCarburant'] ?>"><?= $carburant['typeCarburant'] ?><br>
+                <input class="form-check-input" name="carburant" type="checkbox"
+                  value="<?= $carburant['typeCarburant'] ?>" id="<?= $carburant['IdCarburant'] ?>"><?= $carburant['typeCarburant'] ?><br>
               <?php } ?>
             </div>
 
@@ -73,10 +68,12 @@ if ($rechercher = "Rechercher") {
             <legend>Transmission</legend>
             <div class="form-check">
               <?php foreach ($arrayTransmission as $transmission) { ?>
-                <input class="form-check-input" name="transmission" type="checkbox" value="<?= $transmission['typeTransmission'] ?>" id="<?= $transmission['IdTransmission'] ?>"><?= $transmission['typeTransmission'] ?><br>
+                <input class="form-check-input" name="transmission" type="checkbox"
+                  value="<?= $transmission['typeTransmission'] ?>" id="<?= $transmission['IdTransmission'] ?>"><?= $transmission['typeTransmission'] ?><br>
               <?php } ?>
             </div>
-            <input type="submit" name="apliquerFiltre" id="apliquerFiltre" value="Rechercher" class="btn btn-primary mt-5 float-end">
+            <input type="submit" name="apliquerFiltre" id="apliquerFiltre" value="Rechercher"
+              class="btn btn-primary mt-5 float-end">
           </form>
         </div>
       </div>
@@ -205,41 +202,12 @@ if ($rechercher = "Rechercher") {
                     </div>
                   </div>
                 </div>
-            <?php }
+              <?php }
           } ?>
         </section>
       </div>
     </div>
   </div>
 </body>
-<footer class="text-center text-white fixed-bottom bg-dark">
-
-  <div class="container p-4">
-    <img src="../../assets/images/LogoMiniNom-removebg-preview.png" width="150" height="50">
-  </div>
-  <section class="mb-4">
-    <!-- Facebook -->
-    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
-
-    <!-- Twitter -->
-    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
-
-    <!-- Google -->
-    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
-
-    <!-- Instagram -->
-    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
-
-    <!-- Linkedin -->
-    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
-
-    <!-- Github -->
-    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
-  </section>
-  <div class="text-center p-3 bg-dark">
-    © 2020 Copyright:
-    <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-  </div>
-</footer>
 
 </html>
