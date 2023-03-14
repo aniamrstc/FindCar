@@ -151,11 +151,11 @@ function getAllVehicule(){
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
-function newVehicule(){
+function newVehicule($nom,$prix,$image,$nbPlace,$transmission,$carburant,$nbPorte,$marque,$location,$type){
     $myDb = getConnexion();
-    $sql = $myDb->prepare("INSERT INTO Vehicules (IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType,imageVoiture) VALUES(?,?,?,)");
-    $sql->execute();
-    return $sql->fetchAll(PDO::FETCH_ASSOC);
+    $sql = $myDb->prepare("INSERT INTO Vehicules (nomVehicule,prixJour,Statut,imageVoiture,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType) VALUES(?,?,1,?,?,?,?,?,?,?,?)");
+    $sql->execute([$nom,$prix,$image,$nbPlace,$transmission,$carburant,$nbPorte,$marque,$location,$type]);
+    return true;
 }
 
 function filterPageSelection($carburant, $prixJour, $transmission)
@@ -183,4 +183,21 @@ function filterPageSelection($carburant, $prixJour, $transmission)
     $stmt = $myDb->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function getNbPorte(){
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdNbPorte,NbPorte FROM Portes ");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}function getNbplaces(){
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdNbPlaces,nbPlace FROM Places ");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+function getMarque(){
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdMarque,Marque FROM Marques ");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
