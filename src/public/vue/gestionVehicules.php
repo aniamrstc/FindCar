@@ -3,6 +3,12 @@ require("../model/BDD.php");
 require("./navbarFooter.php");
 
 $arrayVehicule = getAllVehicule();
+$idVehicule = filter_input(INPUT_POST, 'idVehicule');
+if (isset($_POST['supprimer'])) {
+
+  deleteVehicule($idVehicule);
+  header("refresh:0");
+}
 
 ?>
 <!DOCTYPE html>
@@ -27,28 +33,40 @@ $arrayVehicule = getAllVehicule();
 </head>
 
 <body>
-
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="./index.php">
+        <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
+      </a>
+      <a class="d-flex" href="./connexion.php">
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </div>
+  </nav>
   <div class="input-group rounded">
-    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-      aria-describedby="search-addon" />
+    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
     <span class="input-group-text border-0" id="search-addon">
       <i class="fas fa-search"></i>
     </span>
   </div>
-  <?php foreach ($arrayVehicule as $vehicule) { ?>
-    <div class="card" style="width: 18rem;">
-      <?php echo '<img  class="w-100" src="data:image/jpeg;base64,' . base64_encode($vehicule['imageVoiture']) . '"/>'; ?>
-      <div class="card-body">
-        <h5 class="card-title">
-          <?= $vehicule['nomVehicule'] ?>
-        </h5>
+  <div class="row" style="margin-top: 30px; height:auto;">
+    <?php foreach ($arrayVehicule as $vehicule) { ?>
+      <form method="POST">
+        <div class="col-xs-6 col-sm-4">
+          <div class="card" style="width: 18rem;">
+            <?php echo '<img  class="w-100" src="data:image/jpeg;base64,' . base64_encode($vehicule['imageVoiture']) . '"/>'; ?>
+            <div class="card-body">
+              <h5 class="card-title"><?= $vehicule['nomVehicule'] ?></h5>
+              <input type="hidden" name="idVehicule" value="<?= $vehicule['IdVehicule'] ?>">
 
-        <input class="btn btn-primary" type="submit" name="modifier" id="moifier" value="Modifier">
-        <input class="btn btn-danger" type="submit" name="supprimer" id="supprimer" value="Supprimer">
-
-      </div>
-    </div>
-  <?php } ?>
+              <input class="btn btn-primary" type="submit" name="modifier" id="moifier" value="Modifier">
+              <input class="btn btn-danger" type="submit" name="supprimer" id="supprimer" value="Supprimer">
+            </div>
+          </div>
+        </div>
+      </form>
+    <?php } ?>
+  </div>
 </body>
 
 </html>
