@@ -240,3 +240,15 @@ function deleteVehicule($IdVehicule){
     $sql = $myDb->prepare("DELETE FROM Vehicules WHERE IdVehicule=? ");
     $sql->execute([$IdVehicule]);
 }
+function getVehiculeById($IdVehicule){
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT IdVehicule, nomVehicule, prixJour, Statut, imageVoiture, Vehicules.IdNbPlaces, Vehicules.IdTransmission, Vehicules.IdCarburant, Vehicules.IdNbPortes, Vehicules.IdMarque, Vehicules.IdLocalisation, TypeVehicule.IdType,Transmission.typeTransmission,Places.nbPlace, Portes.NbPorte,Marques.Marque,Carburant.typeCarburant,Localisation.Nom,TypeVehicule.Type FROM Vehicules,Portes,Places,Transmission,Marques,Carburant,Localisation,TypeVehicule WHERE Vehicules.IdNbPlaces =Places.IdNbPlaces AND Vehicules.IdTransmission = Transmission.IdTransmission AND Vehicules.IdNbPortes=Portes.IdNbPorte AND Vehicules.IdMarque=Marques.IdMarque AND Vehicules.IdCarburant=Carburant.IdCarburant AND Vehicules.IdVehicule=? AND Vehicules.IdLocalisation=Localisation.IdLocalisation AND Vehicules.IdType=TypeVehicule.IdType");
+    $sql->execute([$IdVehicule]);
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+function updateVehicule($nom,$prix,$nbPlace,$transmission,$carburant,$nbPorte,$marque,$location,$type,$idVehicule){
+    $myDb = getConnexion();
+    $sql=$myDb->prepare("UPDATE Vehicules set nomVehicule=?,prixJour=?,IdNbPlaces=?,IdTransmission=?,IdCarburant=?,IdNbPortes=?,IdMarque=?,IdLocalisation=?,IdType=? WHERE IdVehicule=?");
+    $sql->execute([$nom,$prix,$nbPlace,$transmission,$carburant,$nbPorte,$marque,$location,$type,$idVehicule]);
+    return true;
+}
