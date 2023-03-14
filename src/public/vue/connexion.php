@@ -5,7 +5,7 @@
  -->
 <?php
 require("../model/BDD.php");
-session_start();
+require("./navbarFooter.php");
 
 $submit = filter_input(INPUT_POST, 'connexion');
 $erreur = [];
@@ -22,25 +22,33 @@ if ($submit == "Connexion") {
 
     /* Il vérifie si l'e-mail et le mot de passe ne sont pas vides. */
     if ($email != "" && $password != "") {
-       
-        if($email==EMAIL_ADMIN && $password==MDP_ADMIN)
-        {
-            header("location:AjoutVehicules.php");
-            exit;
-        }
+
+
         if (getIdUserByEmail($email)) {
 
             $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);
-            
+
             foreach ($_SESSION['IdUtilisateur'] as $idUser) {
                 $utilisateur = GetInfoUsersById($idUser['IdUtilisateur']);
             }
-            
+
             /* Vérification du mot de passe. */
             if (password_verify($password, $utilisateur['MotDePasse'])) {
-                header("location:index.php");
-                exit;
+                if ($email == EMAIL_ADMIN && $password == MDP_ADMIN) {
+                    $_SESSION['connexionAdmin'] = true;
+
+                    $_SESSION['connexion'] = false;
+                    header("location:index.php");
+                    exit;
+                } else {
+                    $_SESSION['connexion'] = true;
+                    $_SESSION['connexionAdmin'] = false;
+                    header("location:index.php");
+                    exit;
+                }
             } else {
+                $_SESSION['connexionAdmin'] = false;
+                $_SESSION['connexion'] = false;
                 $erreur[] = "Mot de passe incorrect. ";
             }
         } else {
@@ -66,16 +74,6 @@ if ($submit == "Connexion") {
 </head>
 
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="./index.php">
-                <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
-            </a>
-            <a class="d-flex" href="./connexion.php">
-                <i class="fa-solid fa-user"></i>
-            </a>
-        </div>
-    </nav>
     <div>
         <div class="card-body p-4 p-md-5 ">
             <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 d-flex justify-content-center align-items-center">Connexion
@@ -124,34 +122,5 @@ if ($submit == "Connexion") {
         ?>
     </div>
 </body>
-<footer class="text-center text-white fixed-bottom bg-dark">
-
-    <div class="container p-4">
-        <img src="../../assets/images/LogoMiniNom-removebg-preview.png" width="150" height="50">
-    </div>
-    <section class="mb-4">
-        <!-- Facebook -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
-
-        <!-- Twitter -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
-
-        <!-- Google -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
-
-        <!-- Instagram -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
-
-        <!-- Linkedin -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
-
-        <!-- Github -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
-    </section>
-    <div class="text-center p-3 bg-dark">
-        © 2020 Copyright:
-        <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-    </div>
-</footer>
 
 </html>

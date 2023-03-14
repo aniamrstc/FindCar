@@ -1,5 +1,6 @@
 <?php
 require("../model/BDD.php");
+require("./navbarFooter.php");
 
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
@@ -53,17 +54,7 @@ if (isset($_POST['ajouter'])) {
     <title>Ajouter Véhicule</title>
 </head>
 
-<body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="./index.php">
-                <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
-            </a>
-            <a class="d-flex" href="./connexion.php">
-                <i class="fa-solid fa-user"></i>
-            </a>
-        </div>
-    </nav>
+<body>   
     <div class="card-body p-4 p-md-5 ">
         <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 d-flex justify-content-center align-items-center">Ajouter véhicule</h2>
 
@@ -173,34 +164,4 @@ if (isset($_POST['ajouter'])) {
         ?>
     </div>
 </body>
-<footer class="text-center text-white fixed-bottom bg-dark">
-
-    <div class="container p-4">
-        <img src="../../assets/images/LogoMiniNom-removebg-preview.png" width="150" height="50">
-    </div>
-    <section class="mb-4">
-        <!-- Facebook -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
-
-        <!-- Twitter -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
-
-        <!-- Google -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
-
-        <!-- Instagram -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
-
-        <!-- Linkedin -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
-
-        <!-- Github -->
-        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
-    </section>
-    <div class="text-center p-3 bg-dark">
-        © 2020 Copyright:
-        <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-    </div>
-</footer>
-
-</html> 
+</html>

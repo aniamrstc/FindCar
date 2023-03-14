@@ -34,8 +34,8 @@ function GetVehiculeByFiltre($type, $location, $dateDepart, $dateRetour)
 {
 
     $myDb = getConnexion();
-    $sql ="SELECT IdVehicule, nomVehicule, prixJour, Statut, imageVoiture, Vehicules.IdNbPlaces, Vehicules.IdTransmission, Vehicules.IdCarburant, Vehicules.IdNbPortes, Vehicules.IdMarque, IdLocalisation, IdType,Transmission.typeTransmission,Places.nbPlace, Portes.NbPorte,Marques.Marque,Carburant.typeCarburant FROM Vehicules,Portes,Places,Transmission,Marques,Carburant WHERE 1=1 AND Vehicules.IdNbPlaces =Places.IdNbPlaces AND Vehicules.IdTransmission = Transmission.IdTransmission AND Vehicules.IdNbPortes=Portes.IdNbPorte AND Vehicules.IdMarque=Marques.IdMarque AND Vehicules.IdCarburant=Carburant.IdCarburant";
-    
+    $sql = "SELECT IdVehicule, nomVehicule, prixJour, Statut, imageVoiture, Vehicules.IdNbPlaces, Vehicules.IdTransmission, Vehicules.IdCarburant, Vehicules.IdNbPortes, Vehicules.IdMarque, IdLocalisation, IdType,Transmission.typeTransmission,Places.nbPlace, Portes.NbPorte,Marques.Marque,Carburant.typeCarburant FROM Vehicules,Portes,Places,Transmission,Marques,Carburant WHERE 1=1 AND Vehicules.IdNbPlaces =Places.IdNbPlaces AND Vehicules.IdTransmission = Transmission.IdTransmission AND Vehicules.IdNbPortes=Portes.IdNbPorte AND Vehicules.IdMarque=Marques.IdMarque AND Vehicules.IdCarburant=Carburant.IdCarburant";
+
     if (!empty($type)) {
         $sql .= " AND IdType='$type'";
     }
@@ -144,9 +144,10 @@ function searchCar($carName)
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
-function getAllVehicule(){
+function getAllVehicule()
+{
 
-  $myDb = getConnexion();
+    $myDb = getConnexion();
     $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType,imageVoiture FROM Vehicules ");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -159,9 +160,9 @@ function newVehicule($nom,$prix,$image,$nbPlace,$transmission,$carburant,$nbPort
 }
 
 function filterPageSelection($carburant, $prixJour, $transmission)
-{   
+{
     $myDb = getConnexion();
-    $sql ="SELECT `IdVehicule`, `nomVehicule`, `prixJour`, `Statut`, `imageVoiture`, `Vehicules`.`IdNbPlaces`, `Vehicules`.`IdTransmission`, `Vehicules`.`IdCarburant`, `Vehicules`.`IdNbPortes`,`Vehicules`.`IdMarque`, `IdLocalisation`, `IdType`, `Transmission`.`typeTransmission`,`Carburant`.`typeCarburant`,`Places`.`nbPlace`,`Portes`.`NbPorte`,`Marques`.`Marque` 
+    $sql = "SELECT `IdVehicule`, `nomVehicule`, `prixJour`, `Statut`, `imageVoiture`, `Vehicules`.`IdNbPlaces`, `Vehicules`.`IdTransmission`, `Vehicules`.`IdCarburant`, `Vehicules`.`IdNbPortes`,`Vehicules`.`IdMarque`, `IdLocalisation`, `IdType`, `Transmission`.`typeTransmission`,`Carburant`.`typeCarburant`,`Places`.`nbPlace`,`Portes`.`NbPorte`,`Marques`.`Marque` 
     FROM `Vehicules`, `Transmission`,`Carburant`,`Portes`,`Places`,`Marques`
     WHERE 1 
     AND `Vehicules`.`IdNbPlaces` = `Places`.`IdNbPlaces`
@@ -169,7 +170,7 @@ function filterPageSelection($carburant, $prixJour, $transmission)
     AND `Vehicules`.`IdNbPortes` = `Portes`.`IdNbPorte`
     AND `Vehicules`.`IdMarque` = `Marques`.`IdMarque` 
     AND `Vehicules`.`IdCarburant` = `Carburant`.`IdCarburant`";
-    
+
     if (!empty($carburant)) {
         $sql .= " AND `typeCarburant`='$carburant'";
     }
@@ -179,10 +180,43 @@ function filterPageSelection($carburant, $prixJour, $transmission)
     if (!empty($transmission)) {
         $sql .= " AND `typeTransmission` = '$transmission'";
     }
-  
+
     $stmt = $myDb->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function searchUtilisateur($user)
+{
+    $myDb = getConnexion();
+    $sql = $myDb->prepare("SELECT `IdUtilisateur`, `Email`, `MotDePasse`, `NbPermis`, `Date`, `Actif`, `Admin` FROM `Utilisateurs` WHERE `Email` LIKE '$user%'");
+    $sql->execute();
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function deleteUtilisateur($idUser)
+{
+    try {
+        $myDb = getConnexion();
+        $sql = $myDb->prepare("DELETE FROM `Utilisateurs` WHERE `IdUtilisateur`= ?");
+        $sql->execute([$idUser]);
+    } catch (Exception $e) {
+        echo 'Exception reçue : ', $e->getMessage(), "\n";
+    }
+}
+
+function updateStatus($status, $idUser)
+{
+    try {
+        $myDb = getConnexion();
+        $sql = $myDb->prepare("UPDATE `Utilisateurs` 
+            SET `Actif`= ?
+            WHERE `IdUtilisateur` = ?
+            ");
+        $sql->execute([$status, $idUser]);
+    } catch (Exception $e) {
+        echo 'Exception reçue : ', $e->getMessage(), "\n";
+    }
 }
 function getNbPorte(){
     $myDb = getConnexion();
