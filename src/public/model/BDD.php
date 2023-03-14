@@ -140,7 +140,7 @@ function getTransmission()
 function searchCar($carName)
 {
     $myDb = getConnexion();
-    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType FROM Vehicules WHERE nomVehicule LIKE '$carName%'");
+    $sql = $myDb->prepare("SELECT IdVehicule,nomVehicule,prixJour,Statut,IdNbPlaces,IdTransmission,IdCarburant,IdNbPortes,IdMarque,IdLocalisation,IdType,imageVoiture FROM Vehicules WHERE nomVehicule LIKE '$carName%'");
     $sql->execute();
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
