@@ -1,6 +1,6 @@
 <?php
 require("../model/BDD.php");
-session_start();
+require("./navbarFooter.php");
 
 $arrayVehiculeById = getVehiculeById($_SESSION['idVehicule']);
 $arrayCarburant = getCarburant();

@@ -1,7 +1,7 @@
 <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
-session_start();
+
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
 

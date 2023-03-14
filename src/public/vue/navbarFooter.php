@@ -37,10 +37,11 @@ if (isset($_SESSION['connexionAdmin'])) {
     <title>Accueil</title>
 </head>
 <style>
-    .fa-solid{
-        color:#9B95BF;
+    .fa-solid {
+        color: #9B95BF;
     }
 </style>
+
 <body>
 
     <nav class="navbar navbar-dark bg-dark">
@@ -48,29 +49,31 @@ if (isset($_SESSION['connexionAdmin'])) {
             <a class="navbar-brand" href="./index.php">
                 <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
             </a>
-            <?php if ($connexion == false && $connexionAdmin == false) { ?>
+            <?php
+            if (isset($connexion) && isset($connexionAdmin)) {
+                if ($connexion == true && $connexionAdmin == false) { ?>
+                    <a class="d-flex" href="./deconnexion.php">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                <?php } elseif ($connexion == false && $connexionAdmin == true) { ?>
+                    <div class="d-flex">
+                        <a class="mx-3" href="./gestionVehicules.php">
+                            <i class="fa-solid fa-car-side"></i>
+                        </a>
+                        <a class="mx-3" href="./gestionUtilisateurs.php">
+                            <i class="fa-solid fa-users"></i>
+                        </a>
+                        <a class="mx-3" href="./deconnexion.php">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </a>
+                    </div>
+
+                <?php }
+            } else { ?>
                 <a class="d-flex" href="./connexion.php">
                     <i class="fa-solid fa-user"></i>
                 </a>
-            <?php } elseif ($connexion == true && $connexionAdmin == false) { ?>
-                <a class="d-flex" href="./deconnexion.php">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </a>
-            <?php } elseif ($connexion == false && $connexionAdmin == true) { ?>
-                <div class="d-flex">
-                    <a class="mx-3" href="./gestionVehicules.php">
-                        <i class="fa-solid fa-car-side"></i>
-                    </a>
-                    <a class="mx-3" href="./gestionUtilisateurs.php">
-                        <i class="fa-solid fa-users"></i>
-                    </a>
-                    <a class="mx-3" href="./deconnexion.php">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </a>
-                </div>
-
             <?php } ?>
-
         </div>
     </nav>
 

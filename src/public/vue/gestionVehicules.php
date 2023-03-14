@@ -2,7 +2,7 @@
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
-session_start();
+
 $arrayVehicule = getAllVehicule();
 $idVehicule = filter_input(INPUT_POST, 'idVehicule');
 if (isset($_POST['supprimer'])) {
@@ -39,16 +39,6 @@ if (isset($_POST['modifier'])) {
 </head>
 
 <body>
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="./index.php">
-        <img src="../../assets/images/LogoMiniNom-removebg-preview.png" alt="" width="150" height="50">
-      </a>
-      <a class="d-flex" href="./connexion.php">
-        <i class="fa-solid fa-user"></i>
-      </a>
-    </div>
-  </nav>
   <div class="w-100 ">
     <div class="input-group rounded mt-3 w-50 mx-auto">
       <input type="search" class="form-control rounded " placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
