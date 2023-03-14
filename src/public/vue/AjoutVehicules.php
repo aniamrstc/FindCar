@@ -10,7 +10,6 @@ $arrayPorte = getNbPorte();
 $arrayMarque = getMarque();
 $nom = filter_input(INPUT_POST, 'NomVehicule');
 $prix = filter_input(INPUT_POST, 'prix');
-$Description = filter_input(INPUT_POST, 'Description');
 $transmission = filter_input(INPUT_POST, 'transmission');
 $carburant = filter_input(INPUT_POST, 'carburant');
 $type = filter_input(INPUT_POST, 'type');
@@ -29,6 +28,7 @@ if (isset($_POST['ajouter'])) {
           
             $succes = "La voiture a bien été ajouté";
         }
+    
     } else {
         $erreur[] = "Vous devez remplir tous les champs ";
     }
@@ -65,7 +65,7 @@ if (isset($_POST['ajouter'])) {
         </div>
     </nav>
     <div class="card-body p-4 p-md-5 ">
-        <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 d-flex justify-content-center align-items-center">Ajouter Véhicule</h2>
+        <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 d-flex justify-content-center align-items-center">Ajouter véhicule</h2>
 
         <form method="POST" class="px-md-2" style="margin:50px 150px" enctype="multipart/form-data">
             <div class="form-outline mb-4">

@@ -75,7 +75,7 @@ if(isset($_POST['rechercher'])){
             <div class="row">
                 <div class="col">
                     <label for="lieuDepart">Lieu de départ et de retour :</label>
-                    <select class="form-control" name="lieuDepartRetour" id="depart/retour-select">
+                    <select class="form-control" name="lieuDepartRetour" id="depart/retour-select" required>
                         <option value="">--Choissisez une option--</option>
                         <?php foreach ($arrayLocation as $location) { ?>
                             <option value="<?= $location['IdLocalisation'] ?>"><?= $location['Nom'] ?></option>
