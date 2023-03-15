@@ -9,5 +9,5 @@ const DB_NAME = "BDDFindCar";
 const DB_USER = 'FindCar';
 const DB_PASSWORD = 'Find306Car';
 
-const EMAIL_ADMIN = "ls@gmail.com";
-const MDP_ADMIN = "12345678";
+const EMAIL_ADMIN = "ania.mrstc@eduge.ch";
+const MDP_ADMIN = "Super2023";
