@@ -5,7 +5,7 @@ require("./navbarFooter.php");
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
 
-
+$selectionner = filter_input(INPUT_POST, 'selectionner', FILTER_SANITIZE_SPECIAL_CHARS);
 $rechercher = filter_input(INPUT_POST, 'apliquerFiltre', FILTER_SANITIZE_SPECIAL_CHARS);
 
 $dateRetour = new DateTime($_SESSION['dateRetour']);
@@ -18,9 +18,17 @@ if ($rechercher = "Rechercher") {
   $filtrePrixJour = filter_input(INPUT_POST, 'prixJour', FILTER_SANITIZE_SPECIAL_CHARS);
   $filtreTransmission = filter_input(INPUT_POST, 'transmission', FILTER_SANITIZE_SPECIAL_CHARS);
 
-  $arrayVehiculeByFilter = filterPageSelection($filtreCarburant, $filtrePrixJour, $filtreTransmission);
-}
+  if (!empty($filtreCarburant) || !empty($filtrePrixJour) || !empty($filtreTransmission))
 
+    $arrayVehicule = filterPageSelection($filtreCarburant, $filtrePrixJour, $filtreTransmission);
+} else {
+  $arrayVehicule = $_SESSION['arrayVehicules'];
+}
+if ($selectionner == "Sélectionner") {
+  $_SESSION['idVehiculeSelection'] = filter_input(INPUT_POST, 'idVehiculeSelection', FILTER_SANITIZE_SPECIAL_CHARS);
+  header("Location:resumePaiement.php");
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,8 +87,16 @@ if ($rechercher = "Rechercher") {
       </div>
       <div class="col py-3">
         <section style="background-color: #eee;">
-          <?php if (!empty($arrayVehiculeByFilter)) {
-            foreach ($arrayVehiculeByFilter as $vehicules) { ?>
+          <?php if (empty($arrayVehicule)) { ?>
+
+            <div class="row h-100 justify-content-center align-items-center">
+              <div class="alert alert-danger w-50 mt-3 col-12 text-center" role="alert">
+                <p> Aucune voiture n'a été trouvée pour les critères de recherche sélectionnés. </p>
+              </div>
+            </div>
+            <?php
+          } else {
+            foreach ($arrayVehicule as $vehicules) { ?>
               <div class="container py-5">
                 <div class="row justify-content-center mb-3">
                   <div class="col-md-12 col-xl-10">
@@ -131,7 +147,12 @@ if ($rechercher = "Rechercher") {
                               </p>
                             </div>
                             <div class="d-flex flex-column mt-4">
-                              <button class="btn btn-primary btn-sm" type="button">Sélectionner -></button>
+                              <form action="#" method="post">
+                                <input type="hidden" name="idVehiculeSelection" value="<?= $vehicules["IdVehicule"] ?>">
+                                <input type="submit" class="btn btn-primary btn-sm " name="selectionner"
+                                  value="Sélectionner">
+                                <!-- <button class="btn btn-primary btn-sm " type="button" name="selectionner">Sélectionner <i class="fa-solid fa-arrow-right"></i></button> -->
+                              </form>
                             </div>
                           </div>
                         </div>
@@ -141,68 +162,6 @@ if ($rechercher = "Rechercher") {
                 </div>
               </div>
             <?php }
-          } else {
-            foreach ($_SESSION['arrayVehicules'] as $vehicule) { ?>
-              <div class="container py-5">
-                <div class="row justify-content-center mb-3">
-                  <div class="col-md-12 col-xl-10">
-                    <div class="card shadow-0 border rounded-3">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                              <?php echo '<img  class="w-100" src="data:image/jpeg;base64,' . base64_encode($vehicule['imageVoiture']) . '"/>'; ?>
-                              <a href="#!">
-                                <div class="hover-overlay">
-                                  <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-lg-6 col-xl-6">
-                            <h5>
-                              <?= $vehicule['Marque'] . " " . $vehicule['nomVehicule'] ?>
-                            </h5>
-
-                            <div class="mt-1 mb-0 text-muted small">
-                              <span>
-                                <?= $vehicule['typeTransmission'] ?>
-                              </span>
-                              <span class="text-primary"> • </span>
-                              <span>Nombres de places :
-                                <?= $vehicule['nbPlace'] ?>
-                              </span>
-                              <span class="text-primary"> • </span>
-                              <span>Nombres de portes :
-                                <?= $vehicule['NbPorte'] ?>
-                              </span>
-                              <span class="text-primary"> • </span>
-                              <span>
-                                <?= $vehicule['typeCarburant'] ?>
-                              </span>
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                            <div class="d-flex flex-row align-items-center mb-1">
-                              <h4 class="mb-1 me-1">
-                                <?= $vehicule['prixJour'] ?> CHF/Jour
-                              </h4>
-                              <h4 class="mb-1 me-1">
-                                <?= $vehicule['prixJour'] ?> CHF/Total
-                              </h4>
-                            </div>
-
-                            <div class="d-flex flex-column mt-4">
-                              <button class="btn btn-primary btn-sm" type="button">Sélectionner -></button>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <?php }
           } ?>
         </section>
       </div>
