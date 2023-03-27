@@ -1,4 +1,9 @@
-<?php
+<!-- 
+    Projet : FindCar
+    Auteur : Ania Marostica
+    Date : 07.03.2023
+ -->
+ <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
 

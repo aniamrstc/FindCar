@@ -1,3 +1,8 @@
+<!-- 
+    Projet : FindCar
+    Auteur : Liliana Santos
+    Date : 07.03.2023
+ -->
 <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
@@ -26,7 +31,6 @@ if (isset($activerDesactiver)) {
         $update = updateStatus($status, $idUser);
         header("Refresh:0");
     }
-
 }
 ?>
 <!DOCTYPE html>
@@ -56,12 +60,14 @@ if (isset($activerDesactiver)) {
         <div class="row mt-5">
             <div class="col-md-5 mx-auto">
                 <label for="rechercherUtilisateur">Rechercher un email :</label>
-                <div class="input-group">
-
-                    <input id="search" class="border-0 rounded shadow" type="Search" placeholder="Recherche"
-                        name="rechercherUtilisateur">
-
+                <div class="input-group rounded mt-3 mx-auto">
+                    <input type="search" name="rechercherUtilisateur" class="form-control rounded "
+                        placeholder="Recherche" aria-label="Search" aria-describedby="search-addon">
+                    <span class="input-group-text border-0" id="search-addon">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </span>
                 </div>
+
             </div>
         </div>
     </form>

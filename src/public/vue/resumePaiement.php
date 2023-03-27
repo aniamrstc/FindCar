@@ -1,4 +1,9 @@
-<?php
+<!-- 
+    Projet : FindCar
+    Auteur : Ania Marostica, Liliana Santos
+    Date : 06.03.2023
+ -->
+ <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
@@ -30,27 +35,27 @@ $vehicules = getVehiculeById($_SESSION['idVehiculeSelection']);
                         <div class="row bg-light">
                             <div class="col-md-4 col-6 ps-30 pe-0 my-4">
                                 <p class="text-muted">Marque</p>
-                                <p class="h5"><?=$vehicule['Marque']?></p>
+                                <p class="h5"><?= $vehicule['Marque'] ?></p>
                             </div>
                             <div class="col-md-4 col-6 ps-30 my-4">
                                 <p class="text-muted">Modele</p>
-                                <p class="h5 m-0"><?=$vehicule['nomVehicule']?></p>
+                                <p class="h5 m-0"><?= $vehicule['nomVehicule'] ?></p>
                             </div>
                             <div class="col-md-4 col-6 ps-30 my-4">
                                 <p class="text-muted">Transmission</p>
-                                <p class="h5 m-0"><?=$vehicule['typeTransmission']?></p>
+                                <p class="h5 m-0"><?= $vehicule['typeTransmission'] ?></p>
                             </div>
                             <div class="col-md-4 col-6 ps-30 my-4">
                                 <p class="text-muted">Carburant</p>
-                                <p class="h5 m-0"><?=$vehicule['typeCarburant']?></p>
+                                <p class="h5 m-0"><?= $vehicule['typeCarburant'] ?></p>
                             </div>
                             <div class="col-md-4 col-6 ps-30 my-4">
                                 <p class="text-muted">Lieu et date de départ</p>
-                                <p class="h5 m-0"><?=$vehicule['Nom']."<br>".$_SESSION['dateDepart']?></p>
+                                <p class="h5 m-0"><?= $vehicule['Nom'] . "<br>" . $_SESSION['dateDepart'] ?></p>
                             </div>
                             <div class="col-md-4 col-6 ps-30 my-4">
                                 <p class="text-muted">Lieu et date de retour</p>
-                                <p class="h5 m-0"><?=$vehicule['Nom']."<br>".$_SESSION['dateRetour']?></p>
+                                <p class="h5 m-0"><?= $vehicule['Nom'] . "<br>" . $_SESSION['dateRetour'] ?></p>
                             </div>
                         </div>
                     <?php } ?>
@@ -71,7 +76,7 @@ $vehicules = getVehiculeById($_SESSION['idVehiculeSelection']);
                                     </span>
                                     <div class=" w-100 d-flex flex-column align-items-end">
                                         <p class="text-muted">Date d'expiration</p>
-                                        <input class="form-control2" type="text"  placeholder="MM/YYYY">
+                                        <input class="form-control2" type="text" placeholder="MM/YYYY">
                                     </div>
                                 </div>
                                 <div class="d-flex mb-5">

@@ -3,7 +3,7 @@
     Auteur : Ania Marostica
     Date : 06.03.2023
  -->
-<?php
+ <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
 

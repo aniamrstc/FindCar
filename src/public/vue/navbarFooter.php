@@ -3,7 +3,7 @@
     Auteur : Ania Marostica, Liliana Santos
     Date : 20.02.2023
  -->
-<?php
+ <?php
 session_start();
 
 if (isset($_SESSION['connexion'])) {
@@ -23,22 +23,31 @@ if (isset($_SESSION['connexionAdmin'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://kit.fontawesome.com/865258096d.js" crossorigin="anonymous"></script>
     <title>Accueil</title>
 </head>
 <style>
     .fa-solid {
         color: #9B95BF;
+    }
+
+    body {
+        position: relative;
+        min-height: 100vh;
+    }
+
+    footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
     }
 </style>
 
@@ -52,7 +61,7 @@ if (isset($_SESSION['connexionAdmin'])) {
             <?php
             if (isset($connexion) && isset($connexionAdmin)) {
                 if ($connexion == true && $connexionAdmin == false) { ?>
-                    <a class="d-flex" href="./deconnexion.php">
+                    <a class="mx-3" href="./deconnexion.php">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
                 <?php } elseif ($connexion == false && $connexionAdmin == true) { ?>
@@ -77,15 +86,14 @@ if (isset($_SESSION['connexionAdmin'])) {
         </div>
     </nav>
 
-    <footer class="text-center text-white fixed-bottom bg-dark">
+    <footer class="text-center text-white bg-dark sticky-bottom">
 
         <div class="container p-4">
             <img src="../../assets/images/LogoMiniNom-removebg-preview.png" width="150" height="50">
         </div>
         <section class="mb-4">
             <!-- Facebook -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                    class="fab fa-facebook-f"></i></a>
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
 
             <!-- Twitter -->
             <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
@@ -94,12 +102,10 @@ if (isset($_SESSION['connexionAdmin'])) {
             <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
 
             <!-- Instagram -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                    class="fab fa-instagram"></i></a>
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
 
             <!-- Linkedin -->
-            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                    class="fab fa-linkedin-in"></i></a>
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
 
             <!-- Github -->
             <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>

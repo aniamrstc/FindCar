@@ -3,18 +3,21 @@
     Auteur : Ania Marostica, Liliana Santos
     Date : 20.02.2023
  -->
-<?php
+ <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
 $arrayLocation = getInfoLocation();
 $arrayType = getInfoType();
+
 $lieuDepartRetour = filter_input(INPUT_POST, 'lieuDepartRetour');
 $dateDepart = filter_input(INPUT_POST, 'dateDepart');
 $dateRetour = filter_input(INPUT_POST, 'dateRetour');
 $type = filter_input(INPUT_POST, 'typeVehicule');
+
 if (isset($_POST['rechercher'])) {
     $_SESSION['arrayVehicules'] = GetVehiculeByFiltre($type, $lieuDepartRetour, $dateDepart, $dateRetour);
+    $_SESSION['lieu']=$lieuDepartRetour;
     $_SESSION['dateDepart'] = $dateDepart;
     $_SESSION['dateRetour'] = $dateRetour;
     header("location:selection.php");
@@ -79,12 +82,12 @@ if (isset($_POST['rechercher'])) {
 
                     <label for="email">Date de départ :</label>
                     <input type="date" name="dateDepart" id="date" placeholder="Date de naissance "
-                        class="form-control">
+                        class="form-control" required>
                 </div>
                 <div class="col">
                     <label for="email">Date de retour :</label>
                     <input type="date" name="dateRetour" id="date" placeholder="Date de naissance "
-                        class="form-control">
+                        class="form-control" required>
                 </div>
             </div>
             <div>

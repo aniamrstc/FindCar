@@ -1,4 +1,9 @@
-<?php
+<!-- 
+    Projet : FindCar
+    Auteur : Ania Marostica
+    Date : 07.03.2023
+ -->
+ <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
@@ -51,7 +56,7 @@ if (isset($_POST['ajouter'])) {
       </div>
     </form>
     <form method="POST">
-      <input class="btn btn-primary" type="submit" name="ajouter" id="ajouter" value="Ajouter un vehicule">
+      <input class="btn btn-primary ml-5" type="submit" name="ajouter" id="ajouter" value="Ajouter un vehicule">
     </form>
     <?php if ($search != "") {
       $Recherche = searchCar($search);

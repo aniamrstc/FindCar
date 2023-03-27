@@ -3,7 +3,7 @@
     Auteur : Ania Marostica, Liliana Santos
     Date : 20.02.2023
  -->
-<?php
+ <?php
 
 require_once "Constantes.php";
 
@@ -159,17 +159,22 @@ function newVehicule($nom,$prix,$image,$nbPlace,$transmission,$carburant,$nbPort
     return true;
 }
 
-function filterPageSelection($carburant, $prixJour, $transmission)
+function filterPageSelection($localisation,$carburant, $prixJour, $transmission)
 {
     $myDb = getConnexion();
-    $sql = "SELECT `IdVehicule`, `nomVehicule`, `prixJour`, `Statut`, `imageVoiture`, `Vehicules`.`IdNbPlaces`, `Vehicules`.`IdTransmission`, `Vehicules`.`IdCarburant`, `Vehicules`.`IdNbPortes`,`Vehicules`.`IdMarque`, `IdLocalisation`, `IdType`, `Transmission`.`typeTransmission`,`Carburant`.`typeCarburant`,`Places`.`nbPlace`,`Portes`.`NbPorte`,`Marques`.`Marque` 
-    FROM `Vehicules`, `Transmission`,`Carburant`,`Portes`,`Places`,`Marques`
+    $sql = "SELECT `IdVehicule`, `nomVehicule`, `prixJour`, `Statut`, `imageVoiture`, `Vehicules`.`IdNbPlaces`, `Vehicules`.`IdTransmission`, `Vehicules`.`IdCarburant`, 
+    `Vehicules`.`IdNbPortes`,`Vehicules`.`IdMarque`, `Vehicules`.`IdLocalisation`, `IdType`, `Transmission`.`typeTransmission`,`Carburant`.`typeCarburant`,`Places`.`nbPlace`,
+    `Portes`.`NbPorte`,`Marques`.`Marque`, `Localisation`.`Nom`
+    FROM `Vehicules`, `Transmission`,`Carburant`,`Portes`,`Places`,`Marques`,`Localisation`
     WHERE 1 
     AND `Vehicules`.`IdNbPlaces` = `Places`.`IdNbPlaces`
     AND `Vehicules`.`IdTransmission` = `Transmission`.`IdTransmission` 
     AND `Vehicules`.`IdNbPortes` = `Portes`.`IdNbPorte`
     AND `Vehicules`.`IdMarque` = `Marques`.`IdMarque` 
-    AND `Vehicules`.`IdCarburant` = `Carburant`.`IdCarburant`";
+    AND `Vehicules`.`IdCarburant` = `Carburant`.`IdCarburant`
+    AND `Vehicules`.`IdLocalisation` = `Localisation`.`IdLocalisation`
+    AND `Localisation`.`IdLocalisation` = $localisation";
+   
 
     if (!empty($carburant)) {
         $sql .= " AND `typeCarburant`='$carburant'";

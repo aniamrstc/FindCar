@@ -1,4 +1,9 @@
-<?php
+<!-- 
+    Projet : FindCar
+    Auteur : Ania Marostica, Liliana Santos
+    Date : 27.02.2023
+ -->
+ <?php
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
@@ -10,20 +15,25 @@ $rechercher = filter_input(INPUT_POST, 'apliquerFiltre', FILTER_SANITIZE_SPECIAL
 
 $dateRetour = new DateTime($_SESSION['dateRetour']);
 $dateDepart = new DateTime($_SESSION['dateDepart']);
-$nbJour = $dateRetour->diff($dateDepart);
 
-if ($rechercher = "Rechercher") {
+$calculNbJour = $dateRetour->diff($dateDepart);
+$nbJour = $calculNbJour->days;
+
+if (isset($rechercher)) {
 
   $filtreCarburant = filter_input(INPUT_POST, 'carburant', FILTER_SANITIZE_SPECIAL_CHARS);
   $filtrePrixJour = filter_input(INPUT_POST, 'prixJour', FILTER_SANITIZE_SPECIAL_CHARS);
   $filtreTransmission = filter_input(INPUT_POST, 'transmission', FILTER_SANITIZE_SPECIAL_CHARS);
 
-  if (!empty($filtreCarburant) || !empty($filtrePrixJour) || !empty($filtreTransmission))
+  if (!empty($filtreCarburant) || !empty($filtrePrixJour) || !empty($filtreTransmission)) {
 
-    $arrayVehicule = filterPageSelection($filtreCarburant, $filtrePrixJour, $filtreTransmission);
+    $localisation = filter_input(INPUT_POST, 'localisation', FILTER_SANITIZE_SPECIAL_CHARS);
+    $arrayVehicule = filterPageSelection($localisation, $filtreCarburant, $filtrePrixJour, $filtreTransmission);
+  }
 } else {
   $arrayVehicule = $_SESSION['arrayVehicules'];
 }
+
 if ($selectionner == "Sélectionner") {
   $_SESSION['idVehiculeSelection'] = filter_input(INPUT_POST, 'idVehiculeSelection', FILTER_SANITIZE_SPECIAL_CHARS);
   header("Location:resumePaiement.php");
@@ -37,16 +47,13 @@ if ($selectionner == "Sélectionner") {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   <script src="https://kit.fontawesome.com/865258096d.js" crossorigin="anonymous"></script>
   <title>selection</title>
 </head>
@@ -58,35 +65,34 @@ if ($selectionner == "Sélectionner") {
       <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
           <form action="#" method="post">
-            <legend>Type de carburant</legend>
+            <legend class="mt-3">Type de carburant</legend>
             <div class="form-check">
               <?php foreach ($arrayCarburant as $carburant) { ?>
-                <input class="form-check-input" name="carburant" type="checkbox"
-                  value="<?= $carburant['typeCarburant'] ?>" id="<?= $carburant['IdCarburant'] ?>"><?= $carburant['typeCarburant'] ?><br>
+                <input class="form-check-input" name="carburant" type="checkbox" value="<?= $carburant['typeCarburant'] ?>" id="<?= $carburant['IdCarburant'] ?>"><?= $carburant['typeCarburant'] ?><br>
               <?php } ?>
             </div>
 
-            <legend>Prix par jour</legend>
+            <legend class="mt-5">Prix par jour</legend>
             <div class="form-group mt-3">
 
               <input class="form-control" type="number" name="prixJour" id="prixJour" min="0" max="300">
 
             </div>
 
-            <legend>Transmission</legend>
+            <legend class="mt-5">Transmission</legend>
             <div class="form-check">
               <?php foreach ($arrayTransmission as $transmission) { ?>
-                <input class="form-check-input" name="transmission" type="checkbox"
-                  value="<?= $transmission['typeTransmission'] ?>" id="<?= $transmission['IdTransmission'] ?>"><?= $transmission['typeTransmission'] ?><br>
+                <input class="form-check-input" name="transmission" type="checkbox" value="<?= $transmission['typeTransmission'] ?>" id="<?= $transmission['IdTransmission'] ?>"><?= $transmission['typeTransmission'] ?><br>
               <?php } ?>
             </div>
-            <input type="submit" name="apliquerFiltre" id="apliquerFiltre" value="Rechercher"
-              class="btn btn-primary mt-5 float-end">
+            <input type="hidden" name="localisation" value="<?= $_SESSION['lieu'] ?>">
+            <input type="submit" name="apliquerFiltre" id="apliquerFiltre" value="Rechercher" class="btn btn-primary mt-5 float-end">
           </form>
+
         </div>
       </div>
-      <div class="col py-3">
-        <section style="background-color: #eee;">
+      <div class="col py-3" style="background-color: #eee;">
+        <section style="padding-bottom:20%;">
           <?php if (empty($arrayVehicule)) { ?>
 
             <div class="row h-100 justify-content-center align-items-center">
@@ -97,7 +103,7 @@ if ($selectionner == "Sélectionner") {
             <?php
           } else {
             foreach ($arrayVehicule as $vehicules) { ?>
-              <div class="container py-5">
+              <div class="container py-5 pb-2">
                 <div class="row justify-content-center mb-3">
                   <div class="col-md-12 col-xl-10">
                     <div class="card shadow-0 border rounded-3">
@@ -135,6 +141,7 @@ if ($selectionner == "Sélectionner") {
                                 <?= $vehicules['typeCarburant'] ?>
                               </span>
                             </div>
+
                           </div>
                           <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                             <div class="d-flex flex-row align-items-center mb-1">
@@ -142,15 +149,14 @@ if ($selectionner == "Sélectionner") {
                                 <?= $vehicules['prixJour'] ?> CHF/Jour
                               </h4>
 
-                              <p class="mb-1 me-1">
-                                <?= $vehicules['prixJour'] ?> CHF/Total
-                              </p>
                             </div>
+                            <h6 class="mb-1 me-1">
+                              <?= $vehicules['prixJour'] * $nbJour ?> CHF/Total
+                            </h6>
                             <div class="d-flex flex-column mt-4">
                               <form action="#" method="post">
                                 <input type="hidden" name="idVehiculeSelection" value="<?= $vehicules["IdVehicule"] ?>">
-                                <input type="submit" class="btn btn-primary btn-sm " name="selectionner"
-                                  value="Sélectionner">
+                                <input type="submit" class="btn btn-primary btn-sm " name="selectionner" value="Sélectionner">
                                 <!-- <button class="btn btn-primary btn-sm " type="button" name="selectionner">Sélectionner <i class="fa-solid fa-arrow-right"></i></button> -->
                               </form>
                             </div>
@@ -161,7 +167,7 @@ if ($selectionner == "Sélectionner") {
                   </div>
                 </div>
               </div>
-            <?php }
+          <?php }
           } ?>
         </section>
       </div>
