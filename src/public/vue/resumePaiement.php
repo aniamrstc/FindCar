@@ -4,10 +4,15 @@
     Date : 06.03.2023
  -->
  <?php
+  /* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
-// https://bbbootstrap.com/snippets/bootstrap-5-vehicle-features-payment-details-36075039
+/*
+* template utilisé
+ https://bbbootstrap.com/snippets/bootstrap-5-vehicle-features-payment-details-36075039
+*/
+
 
 $vehicules = getVehiculeById($_SESSION['idVehiculeSelection']);
 

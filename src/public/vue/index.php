@@ -4,17 +4,22 @@
     Date : 20.02.2023
  -->
  <?php
+ /* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
+/* Il obtient les informations de la base de données. */
 $arrayLocation = getInfoLocation();
 $arrayType = getInfoType();
 
+/* Obtenir les valeurs du formulaire. */
 $lieuDepartRetour = filter_input(INPUT_POST, 'lieuDepartRetour');
 $dateDepart = filter_input(INPUT_POST, 'dateDepart');
 $dateRetour = filter_input(INPUT_POST, 'dateRetour');
 $type = filter_input(INPUT_POST, 'typeVehicule');
 
+/* Vérifier si le bouton "rechercher" est cliqué. Si c'est le cas, il définira les variables de session
+et redirigera vers la page "selection.php". */
 if (isset($_POST['rechercher'])) {
     $_SESSION['arrayVehicules'] = GetVehiculeByFiltre($type, $lieuDepartRetour, $dateDepart, $dateRetour);
     $_SESSION['lieu']=$lieuDepartRetour;

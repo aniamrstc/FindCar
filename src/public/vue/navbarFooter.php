@@ -6,9 +6,12 @@
  <?php
 session_start();
 
+
+
 if (isset($_SESSION['connexion'])) {
     $connexion = $_SESSION['connexion'];
 }
+
 if (isset($_SESSION['connexionAdmin'])) {
     $connexionAdmin = $_SESSION['connexionAdmin'];
 }

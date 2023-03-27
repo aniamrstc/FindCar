@@ -3,32 +3,43 @@
     Auteur : Ania Marostica
     Date : 06.03.2023
  -->
- <?php
+<?php
+/* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
 $submit = filter_input(INPUT_POST, 'connexion');
+
+/* Initialisation de la variable d'erreur */
 $erreur = [];
 
+/* Vérifier si le bouton "inscription" est cliqué. */
 if (isset($_POST['inscription'])) {
+
+    /*Redigire sur la page d'inscription*/
     header("location:inscription.php");
     exit;
 }
 
+/* Vérifier si le bouton "connexion" est cliqué. */
 if ($submit == "Connexion") {
 
+    /* Obtenir les valeurs du formulaire. */
     $email = filter_input(INPUT_POST, 'email');
     $password = filter_input(INPUT_POST, 'MotDePasse');
 
     /* Il vérifie si l'e-mail et le mot de passe ne sont pas vides. */
     if ($email != "" && $password != "") {
 
-
+        /* Verifie si il a bien recuperer l'idUser selon l'email */
         if (getIdUserByEmail($email)) {
 
+            /* Met en session l'id de l'utilisateur selon email*/
             $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);
 
             foreach ($_SESSION['IdUtilisateur'] as $idUser) {
+
+                /* Obtenir les informations sur l'utilisateur */
                 $utilisateur = GetInfoUsersById($idUser['IdUtilisateur']);
             }
 

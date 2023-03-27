@@ -4,38 +4,53 @@
     Date : 27.02.2023
  -->
  <?php
+  /* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
+/* Obtient les données de la base de données. */
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
 
+/* Obtenir la valeur du bouton qui a été cliqué. */
 $selectionner = filter_input(INPUT_POST, 'selectionner', FILTER_SANITIZE_SPECIAL_CHARS);
 $rechercher = filter_input(INPUT_POST, 'apliquerFiltre', FILTER_SANITIZE_SPECIAL_CHARS);
 
+/* Création d'un nouvel objet DateTime à partir de la date stockée dans la session. */
 $dateRetour = new DateTime($_SESSION['dateRetour']);
 $dateDepart = new DateTime($_SESSION['dateDepart']);
 
+/* Calcul du nombre de jours entre les deux dates. */
 $calculNbJour = $dateRetour->diff($dateDepart);
 $nbJour = $calculNbJour->days;
 
+/* Vérifier si la variable $rechercher est définie. */
 if (isset($rechercher)) {
-
+  /* Obtenir la valeur du bouton qui a été cliqué. */
   $filtreCarburant = filter_input(INPUT_POST, 'carburant', FILTER_SANITIZE_SPECIAL_CHARS);
   $filtrePrixJour = filter_input(INPUT_POST, 'prixJour', FILTER_SANITIZE_SPECIAL_CHARS);
   $filtreTransmission = filter_input(INPUT_POST, 'transmission', FILTER_SANITIZE_SPECIAL_CHARS);
 
+  /*Vérifie si les filtres ne sont pas vides*/
   if (!empty($filtreCarburant) || !empty($filtrePrixJour) || !empty($filtreTransmission)) {
-
+    /* Obtient les données de la base de données. */
     $localisation = filter_input(INPUT_POST, 'localisation', FILTER_SANITIZE_SPECIAL_CHARS);
+
+    /*Stocker les vehicules selectionnées selon les filtres */
     $arrayVehicule = filterPageSelection($localisation, $filtreCarburant, $filtrePrixJour, $filtreTransmission);
   }
 } else {
+  /*Sinon stocker les véhicules en session */
   $arrayVehicule = $_SESSION['arrayVehicules'];
 }
 
+/* Vérifier si le bouton Sélectionner a été cliqué. */
 if ($selectionner == "Sélectionner") {
+
+  /* Mettre en session la voiture selectionner */
   $_SESSION['idVehiculeSelection'] = filter_input(INPUT_POST, 'idVehiculeSelection', FILTER_SANITIZE_SPECIAL_CHARS);
+  
+ /* Rediriger l'utilisateur vers la page resumePaiement.php. */
   header("Location:resumePaiement.php");
   exit;
 }

@@ -4,10 +4,13 @@
     Date : 06.03.2023
  -->
  <?php
+  /* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
 $arrayVehiculeById = getVehiculeById($_SESSION['idVehicule']);
+
+/* Obtient les données de la base de données. */
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
 $arrayLocation = getInfoLocation();
@@ -15,6 +18,8 @@ $arrayType = getInfoType();
 $arrayPlace = getNbplaces();
 $arrayPorte = getNbPorte();
 $arrayMarque = getMarque();
+
+/* Obtenir les valeurs du formulaire. */
 $nom = filter_input(INPUT_POST, 'NomVehicule');
 $prix = filter_input(INPUT_POST, 'prix');
 $marque = filter_input(INPUT_POST, 'marque');
@@ -24,11 +29,17 @@ $type = filter_input(INPUT_POST, 'type');
 $location = filter_input(INPUT_POST, 'location');
 $nbPlace = filter_input(INPUT_POST, 'nbPlace');
 $nbPorte = filter_input(INPUT_POST, 'nbPorte');
+
+/* Initialisation des variables erreur et succes */
 $erreur = [];
 $succes = "";
+
+/* Vérifier si le bouton "modifier" a été cliqué. */
 if (isset($_POST['modifier'])) {
 
     foreach ($arrayVehiculeById as $vehiculebyid) {
+        /* Vérifier si l'utilisateur a modifié la valeur de la sélection. Sinon, il conservera
+        l'ancienne valeur.*/
         if ($transmission == "") {
             $transmission = $vehiculebyid['IdTransmission'];
         }
@@ -53,6 +64,7 @@ if (isset($_POST['modifier'])) {
         }
     }
 
+   /* Mise à jour du véhicule. */
     if (updateVehicule($nom, $prix, $nbPlace, $transmission, $carburant, $nbPorte, $marque, $location, $type, $_SESSION['idVehicule']) == true) {
         $arrayVehiculeById = getVehiculeById($_SESSION['idVehicule']);
         $succes = "Le vehicule a bien été modifié";

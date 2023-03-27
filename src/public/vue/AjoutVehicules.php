@@ -4,9 +4,11 @@
     Date : 07.03.2023
  -->
  <?php
+/* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
+/* Obtient les données de la base de données. */
 $arrayCarburant = getCarburant();
 $arrayTransmission = getTransmission();
 $arrayLocation = getInfoLocation();
@@ -14,6 +16,8 @@ $arrayType = getInfoType();
 $arrayPlace = getNbplaces();
 $arrayPorte = getNbPorte();
 $arrayMarque = getMarque();
+
+/* Obtenir les valeurs du formulaire. */
 $nom = filter_input(INPUT_POST, 'NomVehicule');
 $prix = filter_input(INPUT_POST, 'prix');
 $transmission = filter_input(INPUT_POST, 'transmission');
@@ -22,14 +26,25 @@ $type = filter_input(INPUT_POST, 'type');
 $location = filter_input(INPUT_POST, 'location');
 $nbPlace = filter_input(INPUT_POST, 'nbPlace');
 $nbPorte = filter_input(INPUT_POST, 'nbPorte');
-
 $marque = filter_input(INPUT_POST, 'marque');
+
+/* Initialisation des variables erreur et succes */
 $erreur = [];
 $succes = "";
+
+
+/* Vérifier si le formulaire a été soumis. */
 if (isset($_POST['ajouter'])) {
+
+    /* Obtenir le nom temporaire de l'image. */
     $image = $_FILES['image']['tmp_name'];
+
+    /* Vérifier si tous les champs sont remplis. */
     if ($nom != "" && $prix != "" && $nbPlace != "" && $transmission != "" && $image != "" && $carburant != "" && $nbPorte != "" && $marque != "" && $location != "" && $type != "") {
+       /* Obtenir le contenu du fichier. */
         $img = file_get_contents($image);
+
+        /* Insere un nouveau véhicule */
         if (newVehicule($nom, $prix, $img, $nbPlace, $transmission, $carburant, $nbPorte, $marque, $location, $type)==true) {
           
             $succes = "La voiture a bien été ajouté";

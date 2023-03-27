@@ -4,10 +4,14 @@
     Date : 07.03.2023
  -->
 <?php
+/* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
+/* Récupère tous les utilisateurs de la base de données. */
 $utilisateurs = GetUSers();
+
+/* Obtenir les valeurs du formulaire. */
 $submitSearchBar = filter_input(INPUT_POST, 'searchBar', FILTER_SANITIZE_SPECIAL_CHARS);
 $rechercheUtilisateur = filter_input(INPUT_POST, 'rechercherUtilisateur', FILTER_SANITIZE_SPECIAL_CHARS);
 $delete = filter_input(INPUT_POST, 'delete', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -15,11 +19,14 @@ $activerDesactiver = filter_input(INPUT_POST, 'activerDesactiver', FILTER_SANITI
 $idUser = filter_input(INPUT_POST, 'idUtilisateur', FILTER_SANITIZE_SPECIAL_CHARS);
 $status = filter_input(INPUT_POST, 'statusUser', FILTER_SANITIZE_SPECIAL_CHARS);
 
+
+/* Supprime un utilisateur de la base de données. */
 if (isset($delete)) {
     deleteUtilisateur($idUser);
     header("Refresh:0");
 }
 
+/* Changer le statut d'un utilisateur. */
 if (isset($activerDesactiver)) {
 
     if ($status == "Actif") {
@@ -87,9 +94,14 @@ if (isset($activerDesactiver)) {
                     </thead>
                     <tbody>
                         <?php
+                        /* Vérifie si la barre de recherche est pas vide. */
                         if ($rechercheUtilisateur != "") {
+                            /* Recherche l'utilisateur dans la base de données. */
                             $searchUtilisateur = searchUtilisateur($rechercheUtilisateur);
+
+                            /* Vérifie si le résultat de la recherche n'est pas vide. */
                             if ($searchUtilisateur != null) {
+                                /*Affichage des resultats de la barre de recherche*/
                                 foreach ($searchUtilisateur as $utilisateurRecherche) { ?>
 
                                     <tr>
@@ -135,7 +147,9 @@ if (isset($activerDesactiver)) {
                             } else { ?>
                                 <p class="rechercheJeu">Aucun resultat</p>
                             <?php }
-                        } else if ($rechercheUtilisateur == "") {
+                        } /* Vérifier si la barre de recherche est vide. */
+                        else if ($rechercheUtilisateur == "") {
+                            /*Affichage des utilisateurs*/
                             foreach ($utilisateurs as $utilisateur) { ?>
 
                                     <tr>
@@ -183,18 +197,6 @@ if (isset($activerDesactiver)) {
 
                     </tbody>
                 </table>
-                <!-- <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                        </ul>
-                    </div> -->
             </div>
         </div>
     </div>

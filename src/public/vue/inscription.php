@@ -4,9 +4,11 @@
     Date : 06.03.2023
  -->
  <?php
+ /* Inclus les fichiers BDD.php et navbarFooter.php */
 require("../model/BDD.php");
 require("./navbarFooter.php");
 
+/* Filtrage de l'entrée de l'utilisateur. */
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 $password2 = filter_input(INPUT_POST, 'Retypepassword', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -24,11 +26,14 @@ $dateNaissance = new DateTime($date);
 /* Calcul de l'âge de l'utilisateur. */
 $age = $dateActuelle->diff($dateNaissance)->y;
 
+/* Initialisation de la variable. */
 $messageError = "";
 
 /* Vérifier si l'e-mail est déjà dans la base de données. */
 $userExists = userExists($email);
 
+/* Vérifier si l'utilisateur a cliqué sur le bouton "connexion" et si oui, il redirige l'utilisateur
+vers la page de connexion. */
 if (isset($connexion)) {
     header("location:connexion.php");
 }
@@ -41,11 +46,16 @@ if (isset($inscription)) {
 
             /* Vérifier si l'e-mail existe dans la base de données. */
             if ($userExists['email_exists'] === 1) {
+          
                 $messageError .= nl2br("Cette adresse mail est déjà utilisée. \n");
             } else {
+
+               /* Hachage du mot de passe. */
                 $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+                
                 /* Vérifier si l'utilisateur a plus de 18 ans. */
                 if ($age >= 18) {
+                   /* Insertion de l'utilisateur dans la base de données. */
                     newUser($email, $passwordHash, $numPermis, $date);
                     $_SESSION['IdUtilisateur'] = getIdUserByEmail($email);
                     header("location: connexion.php");
@@ -59,6 +69,7 @@ if (isset($inscription)) {
         }
     }
 
+    /* Vérifier si l'utilisateur a saisi les informations requises. */
     if (empty($email)) {
         $messageError .= nl2br("Veuillez indiquer votre email \n");
     }
