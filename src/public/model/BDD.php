@@ -6,6 +6,7 @@
  <?php
 
 require_once "Constantes.php";
+session_start();
 
 /**
  * Si la connexion à la base de données n'est pas déjà établie, établissez-la et renvoyez-la, sinon
@@ -320,3 +321,4 @@ function updateVehicule($nom,$prix,$nbPlace,$transmission,$carburant,$nbPorte,$m
     $sql->execute([$nom,$prix,$nbPlace,$transmission,$carburant,$nbPorte,$marque,$location,$type,$idVehicule]);
     return true;
 }
+  

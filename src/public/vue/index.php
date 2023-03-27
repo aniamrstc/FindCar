@@ -5,8 +5,8 @@
  -->
  <?php
  /* Inclus les fichiers BDD.php et navbarFooter.php */
-require("../model/BDD.php");
-require("./navbarFooter.php");
+ require_once("../model/BDD.php");
+
 
 /* Il obtient les informations de la base de données. */
 $arrayLocation = getInfoLocation();
@@ -28,6 +28,7 @@ if (isset($_POST['rechercher'])) {
     header("location:selection.php");
 
 }
+require("./navbarFooter.php");
 ?>
 <!DOCTYPE html>
 <html lang="fr">

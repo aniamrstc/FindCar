@@ -4,7 +4,7 @@
     Date : 20.02.2023
  -->
  <?php
-session_start();
+require_once("../model/BDD.php");
 
 
 

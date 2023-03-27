@@ -5,7 +5,7 @@
  -->
  <?php
   /* Inclus les fichiers BDD.php et navbarFooter.php */
-require("../model/BDD.php");
+require_once("../model/BDD.php");
 require("./navbarFooter.php");
 
 /*

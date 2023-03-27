@@ -5,8 +5,8 @@
  -->
 <?php
 /* Inclus les fichiers BDD.php et navbarFooter.php */
-require("../model/BDD.php");
-require("./navbarFooter.php");
+require_once("../model/BDD.php");
+
 
 /* Récupère tous les utilisateurs de la base de données. */
 $utilisateurs = GetUSers();
@@ -39,6 +39,7 @@ if (isset($activerDesactiver)) {
         header("Refresh:0");
     }
 }
+require("./navbarFooter.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

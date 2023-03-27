@@ -5,8 +5,8 @@
  -->
 <?php
 /* Inclus les fichiers BDD.php et navbarFooter.php */
-require("../model/BDD.php");
-require("./navbarFooter.php");
+require_once("../model/BDD.php");
+
 
 $submit = filter_input(INPUT_POST, 'connexion');
 
@@ -69,7 +69,7 @@ if ($submit == "Connexion") {
         $erreur[] = "Saisissez votre email et mot de passe.";
     }
 }
-
+require("./navbarFooter.php");
 ?>
 <!DOCTYPE html>
 <html lang="fr">

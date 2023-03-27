@@ -5,8 +5,8 @@
  -->
  <?php
   /* Inclus les fichiers BDD.php et navbarFooter.php */
-require("../model/BDD.php");
-require("./navbarFooter.php");
+  require_once("../model/BDD.php");
+
 
 $arrayVehiculeById = getVehiculeById($_SESSION['idVehicule']);
 
@@ -70,6 +70,7 @@ if (isset($_POST['modifier'])) {
         $succes = "Le vehicule a bien été modifié";
     }
 }
+require("./navbarFooter.php");
 ?>
 
 <!DOCTYPE html>
